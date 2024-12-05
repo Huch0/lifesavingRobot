@@ -1,0 +1,138 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V8.22.1.15669/W32 for ARM       05/Dec/2024  20:43:23
+# Copyright 1999-2018 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        C:\Users\pnu2\Downloads\project_test\project_test\user\ultra_sonic.c
+#    Command line =  
+#        -f C:\Users\pnu2\AppData\Local\Temp\EW7B8C.tmp
+#        (C:\Users\pnu2\Downloads\project_test\project_test\user\ultra_sonic.c
+#        -D USE_STDPERIPH_DRIVER -D STM32F10X_CL -lC
+#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\List -o
+#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\Obj --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering
+#        --no_scheduling --debug --endian=little --cpu=Cortex-M3 -e --fpu=None
+#        --dlib_config "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        8.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\CMSIS\DeviceSupport\
+#        -I
+#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\CMSIS\DeviceSupport\Startup\
+#        -I
+#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\inc\
+#        -I
+#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\src\
+#        -I C:\Users\pnu2\Downloads\project_test\project_test\libraries\LCD\ -I
+#        C:\Users\pnu2\Downloads\project_test\project_test\user\ -I
+#        C:\Users\pnu2\Downloads\project_test\project_test\user\inc\ -Ol -I
+#        "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        8.0\arm\CMSIS\Core\Include\" -I "C:\Program Files (x86)\IAR
+#        Systems\Embedded Workbench 8.0\arm\CMSIS\DSP\Include\")
+#    Locale       =  C
+#    List file    =  
+#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\List\ultra_sonic.lst
+#    Object file  =  
+#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\Obj\ultra_sonic.o
+#
+###############################################################################
+
+C:\Users\pnu2\Downloads\project_test\project_test\user\ultra_sonic.c
+      1          #include "ultra_sonic.h"
+      2          
+      3          void ultra_sonic_init(void)
+      4          {
+      5              ultra_sonic_rcc_configure();
+      6              ultra_sonic_gpio_configure();
+      7              ultra_sonic_exti_configure();
+      8              ultra_sonic_timer_configure();
+      9          }
+     10          
+     11          void ultra_sonic_rcc_configure(void)
+     12          {
+     13              RCC_APB2PeriphClockCmd(US_FRONT_ECHO_PORT, ENABLE);
+                                            ^
+Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
+          of type "uint32_t"
+     14              RCC_APB2PeriphClockCmd(US_FRONT_TRIG_PORT, ENABLE);
+                                            ^
+Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
+          of type "uint32_t"
+     15              RCC_APB2PeriphClockCmd(US_LEFT_ECHO_PORT, ENABLE);
+                                            ^
+Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
+          of type "uint32_t"
+     16              RCC_APB2PeriphClockCmd(US_LEFT_TRIG_PORT, ENABLE);
+                                            ^
+Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
+          of type "uint32_t"
+     17              RCC_APB2PeriphClockCmd(US_RIGHT_ECHO_PORT, ENABLE);
+                                            ^
+Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
+          of type "uint32_t"
+     18              RCC_APB2PeriphClockCmd(US_RIGHT_TRIG_PORT, ENABLE);
+                                            ^
+Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
+          of type "uint32_t"
+     19              RCC_APB2PeriphClockCmd(US_BACK_ECHO_PORT, ENABLE);
+                                            ^
+Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
+          of type "uint32_t"
+     20              RCC_APB2PeriphClockCmd(US_BACK_TRIG_PORT, ENABLE);
+                                            ^
+Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
+          of type "uint32_t"
+     21          
+     22              RCC_APB1PeriphClockCmd(US_TIMER, ENABLE);
+                                            ^
+Error[Pe167]: argument of type "TIM_TypeDef *" is incompatible with parameter
+          of type "uint32_t"
+     23          }
+     24          
+     25          void ultra_sonic_gpio_configure(void)
+     26          {
+     27              GPIO_InitTypeDef GPIO_InitStructure;
+     28              GPIO_InitStructure.GPIO_Pin = US_FRONT_TRIG_PIN;
+     29              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+     30              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+     31              GPIO_Init(US_FRONT_TRIG_PORT, &GPIO_InitStructure);
+     32          
+     33              GPIO_InitStructure.GPIO_Pin = US_FRONT_ECHO_PIN;
+     34              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+     35              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+     36              GPIO_Init(US_FRONT_ECHO_PORT, &GPIO_InitStructure);
+     37          
+     38              GPIO_InitStructure.GPIO_Pin = US_LEFT_TRIG_PIN;
+     39              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+     40              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+     41              GPIO_Init(US_LEFT_TRIG_PORT, &GPIO_InitStructure);
+     42          
+     43              GPIO_InitStructure.GPIO_Pin = US_LEFT_ECHO_PIN;
+     44              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+     45              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+     46              GPIO_Init(US_LEFT_ECHO_PORT, &GPIO_InitStructure);
+     47          
+     48              GPIO_InitStructure.GPIO_Pin = US_RIGHT_TRIG_PIN;
+     49              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+     50              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+     51              GPIO_Init(US_RIGHT_TRIG_PORT, &GPIO_InitStructure);
+     52          
+     53              GPIO_InitStructure.GPIO_Pin = US_RIGHT_ECHO_PIN;
+     54              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+     55              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+     56              GPIO_Init(US_RIGHT_ECHO_PORT, &GPIO_InitStructure);
+     57          
+     58              GPIO_InitStructure.GPIO_Pin = US_BACK_TRIG_PIN;
+     59              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+     60              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+     61              GPIO_Init(US_BACK_TRIG_PORT, &GPIO_InitStructure);
+     62          
+     63              GPIO_InitStructure.GPIO_Pin = US_BACK_ECHO_PIN;
+     64              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+     65              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+     66              GPIO_Init(US_BACK_ECHO_PORT, &GPIO_InitStructure);
+     67          }
+
+Errors: 9
+Warnings: none

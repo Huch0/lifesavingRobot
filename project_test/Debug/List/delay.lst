@@ -1,0 +1,109 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V8.22.1.15669/W32 for ARM       05/Dec/2024  20:43:03
+# Copyright 1999-2018 IAR Systems AB.
+#
+#    Cpu mode     =  thumb
+#    Endian       =  little
+#    Source file  =  
+#        C:\Users\pnu2\Downloads\project_test\project_test\user\delay.c
+#    Command line =  
+#        -f C:\Users\pnu2\AppData\Local\Temp\EW2F5B.tmp
+#        (C:\Users\pnu2\Downloads\project_test\project_test\user\delay.c -D
+#        USE_STDPERIPH_DRIVER -D STM32F10X_CL -lC
+#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\List -o
+#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\Obj --no_cse
+#        --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering
+#        --no_scheduling --debug --endian=little --cpu=Cortex-M3 -e --fpu=None
+#        --dlib_config "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        8.0\arm\INC\c\DLib_Config_Normal.h" -I
+#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\CMSIS\DeviceSupport\
+#        -I
+#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\CMSIS\DeviceSupport\Startup\
+#        -I
+#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\inc\
+#        -I
+#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\src\
+#        -I C:\Users\pnu2\Downloads\project_test\project_test\libraries\LCD\ -I
+#        C:\Users\pnu2\Downloads\project_test\project_test\user\ -I
+#        C:\Users\pnu2\Downloads\project_test\project_test\user\inc\ -Ol -I
+#        "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        8.0\arm\CMSIS\Core\Include\" -I "C:\Program Files (x86)\IAR
+#        Systems\Embedded Workbench 8.0\arm\CMSIS\DSP\Include\")
+#    Locale       =  C
+#    List file    =  
+#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\List\delay.lst
+#    Object file  =  
+#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\Obj\delay.o
+#
+###############################################################################
+
+C:\Users\pnu2\Downloads\project_test\project_test\user\delay.c
+      1          #include "delay.h"
+      2          
+
+   \                                 In section .text, align 2, keep-with-next
+      3          void default_delay(void)
+      4          {
+      5              int i;
+      6              for (i = 0; i < DELAY_TIME; i++)
+   \                     default_delay: (+1)
+   \   00000000   0x2000             MOVS     R0,#+0
+   \   00000002   0xE000             B.N      ??default_delay_0
+   \                     ??default_delay_1: (+1)
+   \   00000004   0x1C40             ADDS     R0,R0,#+1
+   \                     ??default_delay_0: (+1)
+   \   00000006   0x....             LDR.N    R1,??DataTable0  ;; 0xf4240
+   \   00000008   0x4288             CMP      R0,R1
+   \   0000000A   0xDBFB             BLT.N    ??default_delay_1
+      7              {
+      8              }
+      9          }
+   \   0000000C   0x4770             BX       LR               ;; return
+     10          
+
+   \                                 In section .text, align 2, keep-with-next
+     11          void delay(int time)
+     12          {
+     13              int i;
+     14              for (i = 0; i < time; i++)
+   \                     delay: (+1)
+   \   00000000   0x2100             MOVS     R1,#+0
+   \   00000002   0xE000             B.N      ??delay_0
+   \                     ??delay_1: (+1)
+   \   00000004   0x1C49             ADDS     R1,R1,#+1
+   \                     ??delay_0: (+1)
+   \   00000006   0x4281             CMP      R1,R0
+   \   00000008   0xDBFC             BLT.N    ??delay_1
+     15              {
+     16              }
+     17          }
+   \   0000000A   0x4770             BX       LR               ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable0:
+   \   00000000   0x000F4240         DC32     0xf4240
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   default_delay
+       0   delay
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable0
+      14  default_delay
+      12  delay
+
+ 
+ 30 bytes in section .text
+ 
+ 30 bytes of CODE memory
+
+Errors: none
+Warnings: none
