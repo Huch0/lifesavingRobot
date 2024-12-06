@@ -44,15 +44,15 @@
 #define MOTOR_MANUAL 0
 #define MOTOR_AUTO 1
 
+int motor_mode;
+unsigned int motor_delay = 1000000;
 
 void motor_init(void);
 void motor_rcc_configure(void);
 void motor_gpio_configure(void);
 
 void manual_control(void);
-void auto_control(float, float, float, float);
-
-#define SAFE_DISTANCE 10
+void auto_control();
 
 void go_forward(void);
 void go_backward(void);

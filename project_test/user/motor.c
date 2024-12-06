@@ -1,6 +1,9 @@
 #include "motor.h"
 
-int motor_mode;
+extern int flag_front_obstacle;
+extern int flag_left_obstacle;
+extern int flag_right_obstacle;
+extern int flag_back_obstacle;
 
 void motor_init(void)
 {
@@ -74,21 +77,21 @@ void manual_control(void)
     // TODO
 }
 
-void auto_control(float f_distance, float l_distance, float r_distance, float b_distance)
+void auto_control()
 {
-    if (f_distance > SAFE_DISTANCE)
+    if (!flag_front_obstacle)
     {
         go_forward();
     }
-    else if (l_distance > SAFE_DISTANCE)
+    else if (!flag_left_obstacle)
     {
         turn_left();
     }
-    else if (r_distance > SAFE_DISTANCE)
+    else if (!flag_right_obstacle)
     {
         turn_right();
     }
-    else if (b_distance > SAFE_DISTANCE)
+    else if (!flag_back_obstacle)
     {
         go_backward();
     }
@@ -112,7 +115,7 @@ void go_forward(void)
     GPIO_SetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
     GPIO_ResetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
 
-    default_delay();
+    delay(motor_delay);
     stop();
 }
 
@@ -130,33 +133,11 @@ void go_backward(void)
     GPIO_ResetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
     GPIO_SetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
 
-    default_delay();
+    delay(motor_delay);
     stop();
 }
 
 void turn_left(void)
-{
-    // Front Left: go forward
-    GPIO_SetBits(MOTOR_FL1_PORT, MOTOR_FL1_PIN);
-    GPIO_ResetBits(MOTOR_FL2_PORT, MOTOR_FL2_PIN);
-
-    // Front Right: go backward
-    GPIO_ResetBits(MOTOR_FR1_PORT, MOTOR_FR1_PIN);
-    GPIO_SetBits(MOTOR_FR2_PORT, MOTOR_FR2_PIN);
-
-    // Back Left: Stop
-    GPIO_ResetBits(MOTOR_BL1_PORT, MOTOR_BL1_PIN);
-    GPIO_ResetBits(MOTOR_BL2_PORT, MOTOR_BL2_PIN);
-
-    // Back Right: go forward
-    GPIO_SetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
-    GPIO_ResetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
-
-    default_delay();
-    stop();
-}
-
-void turn_right(void)
 {
     // Front Left: go backward
     GPIO_ResetBits(MOTOR_FL1_PORT, MOTOR_FL1_PIN);
@@ -166,6 +147,28 @@ void turn_right(void)
     GPIO_SetBits(MOTOR_FR1_PORT, MOTOR_FR1_PIN);
     GPIO_ResetBits(MOTOR_FR2_PORT, MOTOR_FR2_PIN);
 
+    // Back Left: Stop
+    GPIO_ResetBits(MOTOR_BL1_PORT, MOTOR_BL1_PIN);
+    GPIO_ResetBits(MOTOR_BL2_PORT, MOTOR_BL2_PIN);
+
+    // Back Right: go forward
+    GPIO_SetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
+    GPIO_ResetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
+
+    delay(motor_delay);
+    stop();
+}
+
+void turn_right(void)
+{
+    // Front Left: go forward
+    GPIO_SetBits(MOTOR_FL1_PORT, MOTOR_FL1_PIN);
+    GPIO_ResetBits(MOTOR_FL2_PORT, MOTOR_FL2_PIN);
+
+    // Front Right: go backward
+    GPIO_ResetBits(MOTOR_FR1_PORT, MOTOR_FR1_PIN);
+    GPIO_SetBits(MOTOR_FR2_PORT, MOTOR_FR2_PIN);
+
     // Back Left: go forward
     GPIO_SetBits(MOTOR_BL1_PORT, MOTOR_BL1_PIN);
     GPIO_ResetBits(MOTOR_BL2_PORT, MOTOR_BL2_PIN);
@@ -174,7 +177,7 @@ void turn_right(void)
     GPIO_ResetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
     GPIO_ResetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
 
-    default_delay();
+    delay(motor_delay);
     stop();
 }
 
