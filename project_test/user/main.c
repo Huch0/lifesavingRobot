@@ -12,6 +12,11 @@
 
 extern int motor_mode;
 
+extern ultra_sonic us_front;
+extern ultra_sonic us_left;
+extern ultra_sonic us_right;
+extern ultra_sonic us_back;
+
 int main()
 {
     SystemInit();
@@ -23,7 +28,8 @@ int main()
 
     while (1)
     {
-        // char user_input = get_user_input();
+        // update the obstacle flags
+        update_obstacle_flags();
 
         if (motor_mode == MOTOR_MANUAL)
         {
@@ -31,7 +37,7 @@ int main()
         }
         else if (motor_mode == MOTOR_AUTO)
         {
-            auto_control(front_ultra_sonic_distance, left_ultra_sonic_distance, right_ultra_sonic_distance, back_ultra_sonic_distance);
+            auto_control();
         }
     }
 

@@ -1,4 +1,4 @@
-#define DELAY_TIME 1000000
+#include "stm32f10x.h"
 
-void default_delay();
 void delay(int time);
+void delay_us(uint32_t us);
