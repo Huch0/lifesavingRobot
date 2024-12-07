@@ -11,7 +11,7 @@
 #include "infrared.h"
 
 // motor.h
-extern int motor_mode;
+// extern int motor_mode;
 
 // ultra_sonic.h
 extern ultra_sonic us_front;
@@ -65,14 +65,8 @@ int main()
         // update the obstacle flags
         update_obstacle_flags();
 
-        if (motor_mode == MOTOR_MANUAL)
-        {
-            // manual_control(user_input);
-        }
-        else if (motor_mode == MOTOR_AUTO)
-        {
-            auto_control();
-        }
+        // control the motor based on the mode
+        motor_control();
 
         // check the infrared sensor flag
         if (ir_interrupt_flag)

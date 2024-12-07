@@ -68,13 +68,44 @@ void motor_gpio_configure(void)
     GPIO_Init(MOTOR_BR2_PORT, &GPIO_InitStructure);
 }
 
+void motor_control()
+{
+    if (motor_mode == MOTOR_MANUAL)
+    {
+        manual_control();
+    }
+    else if (motor_mode == MOTOR_AUTO)
+    {
+        auto_control();
+    }
+}
+
 void manual_control(void)
 {
-    if (motor_mode == MOTOR_AUTO)
+    char user_input = bt_get_user_input();
+    switch (user_input)
     {
-        // Raise error
+    case 'w':
+        go_forward();
+        break;
+    case 's':
+        go_backward();
+        break;
+    case 'a':
+        turn_left();
+        break;
+    case 'd':
+        turn_right();
+        break;
+    case 'x':
+        stop();
+        break;
+    case 'c':
+        motor_mode = MOTOR_AUTO;
+        break;
+    default:
+        break;
     }
-    // TODO
 }
 
 void auto_control()

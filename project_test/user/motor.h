@@ -48,11 +48,8 @@ int motor_mode;
 unsigned int motor_delay = 1000000;
 
 void motor_init(void);
-void motor_rcc_configure(void);
-void motor_gpio_configure(void);
 
-void manual_control(void);
-void auto_control();
+void motor_control();
 
 void go_forward(void);
 void go_backward(void);
