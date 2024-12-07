@@ -58,7 +58,6 @@ void EXTI9_5_IRQHandler(void)
         if (!ir_interrupt_flag) // Check if the flag is already set
         {
             ir_interrupt_flag = 1;
-            bt_send_to_user("human detected - check the camera");
 
             // Simulate debouncing with a delay or software timer
             // Reset the flag after 200ms (implement this in main loop)

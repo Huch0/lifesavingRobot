@@ -7,7 +7,7 @@
 
 #include "motor.h"
 #include "ultra_sonic.h"
-// #include "bluetooth.h"
+#include "bluetooth.h"
 #include "infrared.h"
 
 // motor.h
@@ -57,7 +57,7 @@ int main()
 
     motor_init();
     ultra_sonic_init();
-    // BluetoothInit();
+    bt_init();
     infrared_init();
 
     while (1)
@@ -74,7 +74,12 @@ int main()
             auto_control();
         }
 
-        reset_ir_flag();
+        // check the infrared sensor flag
+        if (ir_interrupt_flag)
+        {
+            bt_send_to_user("human detected - check the camera");
+            reset_ir_flag(); // reset the flag after 200ms
+        }
     }
 
     return 0;
