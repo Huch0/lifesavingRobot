@@ -11,9 +11,9 @@ void infrared_exti_configure(void);
 
 
 #define IR_SENSOR_PORT GPIOA
-#define IR_SENSOR_PIN GPIO_Pin_8
+#define IR_SENSOR_PIN GPIO_Pin_9
 #define IR_SENSOR_RCC RCC_APB2Periph_GPIOA
-#define IR_SENSOR_EXTI_LINE EXTI_Line8
+#define IR_SENSOR_EXTI_LINE EXTI_Line9
 #define IR_SENSOR_EXTI_IRQn EXTI9_5_IRQn
 
 

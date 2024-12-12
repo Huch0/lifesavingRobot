@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR ANSI C/C++ Compiler V8.22.1.15669/W32 for ARM       12/Dec/2024  15:39:05
+# IAR ANSI C/C++ Compiler V8.22.1.15669/W32 for ARM       12/Dec/2024  16:53:30
 # Copyright 1999-2018 IAR Systems AB.
 #
 #    Cpu mode     =  thumb
@@ -8,7 +8,7 @@
 #    Source file  =  
 #        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\infrared.c
 #    Command line =  
-#        -f C:\Users\pnu2\AppData\Local\Temp\EW76CC.tmp
+#        -f C:\Users\pnu2\AppData\Local\Temp\EW9DA4.tmp
 #        (C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\infrared.c
 #        -D USE_STDPERIPH_DRIVER -D STM32F10X_CL -lC
 #        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Debug\List
@@ -90,7 +90,7 @@ C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\infrared.c
    \   00000000   0xB580             PUSH     {R7,LR}
      20              GPIO_InitTypeDef GPIO_InitStructure;
      21              GPIO_InitStructure.GPIO_Pin = IR_SENSOR_PIN;
-   \   00000002   0xF44F 0x7080      MOV      R0,#+256
+   \   00000002   0xF44F 0x7000      MOV      R0,#+512
    \   00000006   0xF8AD 0x0000      STRH     R0,[SP, #+0]
      22              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
    \   0000000A   0x2003             MOVS     R0,#+3
@@ -132,94 +132,102 @@ C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\infrared.c
    \   0000001C   0x.... 0x....      BL       NVIC_Init
      38          
      39              // Configure EXTI line
-     40              EXTI_InitStructure.EXTI_Line = IR_SENSOR_EXTI_LINE;
-   \   00000020   0xF44F 0x7080      MOV      R0,#+256
-   \   00000024   0x9001             STR      R0,[SP, #+4]
-     41              EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-   \   00000026   0x2000             MOVS     R0,#+0
-   \   00000028   0xF88D 0x0008      STRB     R0,[SP, #+8]
-     42              EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
-   \   0000002C   0x2008             MOVS     R0,#+8
-   \   0000002E   0xF88D 0x0009      STRB     R0,[SP, #+9]
-     43              EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-   \   00000032   0x2001             MOVS     R0,#+1
-   \   00000034   0xF88D 0x000A      STRB     R0,[SP, #+10]
-     44              EXTI_Init(&EXTI_InitStructure);
-   \   00000038   0xA801             ADD      R0,SP,#+4
-   \   0000003A   0x.... 0x....      BL       EXTI_Init
-     45          }
-   \   0000003E   0xBD07             POP      {R0-R2,PC}       ;; return
-     46          
-     47          /*
-     48           * When the sensor detects a human, the sensor sends a HIGH signal through OUT pin
-     49           * and retains it for 10 seconds.
-     50           * The sensor sends a LOW signal when it detects no human.
-     51           * The interrupt is triggered when the sensor sends a HIGH signal.
-     52           * The interrupt handler sends a message to the user to check the camera.
-     53           */
-     54          
+     40              GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource9);
+   \   00000020   0x2109             MOVS     R1,#+9
+   \   00000022   0x2000             MOVS     R0,#+0
+   \   00000024   0x.... 0x....      BL       GPIO_EXTILineConfig
+     41              EXTI_InitStructure.EXTI_Line = IR_SENSOR_EXTI_LINE;
+   \   00000028   0xF44F 0x7000      MOV      R0,#+512
+   \   0000002C   0x9001             STR      R0,[SP, #+4]
+     42              EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+   \   0000002E   0x2000             MOVS     R0,#+0
+   \   00000030   0xF88D 0x0008      STRB     R0,[SP, #+8]
+     43              EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
+   \   00000034   0x2008             MOVS     R0,#+8
+   \   00000036   0xF88D 0x0009      STRB     R0,[SP, #+9]
+     44              EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+   \   0000003A   0x2001             MOVS     R0,#+1
+   \   0000003C   0xF88D 0x000A      STRB     R0,[SP, #+10]
+     45              EXTI_Init(&EXTI_InitStructure);
+   \   00000040   0xA801             ADD      R0,SP,#+4
+   \   00000042   0x.... 0x....      BL       EXTI_Init
+     46          }
+   \   00000046   0xBD07             POP      {R0-R2,PC}       ;; return
+     47          
+     48          /*
+     49           * When the sensor detects a human, the sensor sends a HIGH signal through OUT pin
+     50           * and retains it for 10 seconds.
+     51           * The sensor sends a LOW signal when it detects no human.
+     52           * The interrupt is triggered when the sensor sends a HIGH signal.
+     53           * The interrupt handler sends a message to the user to check the camera.
+     54           */
+     55          
 
    \                                 In section .text, align 2, keep-with-next
-     55          void EXTI9_5_IRQHandler(void)
-     56          {
+     56          void EXTI9_5_IRQHandler(void)
+     57          {
    \                     EXTI9_5_IRQHandler: (+1)
    \   00000000   0xB580             PUSH     {R7,LR}
-     57              if (EXTI_GetITStatus(IR_SENSOR_EXTI_LINE) != RESET)
-   \   00000002   0xF44F 0x7080      MOV      R0,#+256
+     58              if (EXTI_GetITStatus(IR_SENSOR_EXTI_LINE) != RESET)
+   \   00000002   0xF44F 0x7000      MOV      R0,#+512
    \   00000006   0x.... 0x....      BL       EXTI_GetITStatus
    \   0000000A   0x2800             CMP      R0,#+0
-   \   0000000C   0xD00A             BEQ.N    ??EXTI9_5_IRQHandler_0
-     58              {
-     59                  EXTI_ClearITPendingBit(IR_SENSOR_EXTI_LINE);
-   \   0000000E   0xF44F 0x7080      MOV      R0,#+256
-   \   00000012   0x.... 0x....      BL       EXTI_ClearITPendingBit
-     60          
+   \   0000000C   0xD011             BEQ.N    ??EXTI9_5_IRQHandler_0
+     59              {
+     60                if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_9) == Bit_SET) {
+   \   0000000E   0xF44F 0x7100      MOV      R1,#+512
+   \   00000012   0x....             LDR.N    R0,??DataTable3  ;; 0x40010800
+   \   00000014   0x.... 0x....      BL       GPIO_ReadInputDataBit
+   \   00000018   0x2801             CMP      R0,#+1
+   \   0000001A   0xD106             BNE.N    ??EXTI9_5_IRQHandler_1
      61                  if (!ir_interrupt_flag) // Check if the flag is already set
-   \   00000016   0x....             LDR.N    R0,??DataTable3_1
-   \   00000018   0x7800             LDRB     R0,[R0, #+0]
-   \   0000001A   0x2800             CMP      R0,#+0
-   \   0000001C   0xD102             BNE.N    ??EXTI9_5_IRQHandler_0
+   \   0000001C   0x....             LDR.N    R0,??DataTable3_1
+   \   0000001E   0x7800             LDRB     R0,[R0, #+0]
+   \   00000020   0x2800             CMP      R0,#+0
+   \   00000022   0xD102             BNE.N    ??EXTI9_5_IRQHandler_1
      62                  {
      63                      ir_interrupt_flag = 1;
-   \   0000001E   0x2001             MOVS     R0,#+1
-   \   00000020   0x....             LDR.N    R1,??DataTable3_1
-   \   00000022   0x7008             STRB     R0,[R1, #+0]
+   \   00000024   0x2001             MOVS     R0,#+1
+   \   00000026   0x....             LDR.N    R1,??DataTable3_1
+   \   00000028   0x7008             STRB     R0,[R1, #+0]
      64          
      65                      // Simulate debouncing with a delay or software timer
      66                      // Reset the flag after 200ms (implement this in main loop)
      67                  }
-     68              }
-     69          }
+     68                }
+     69                
+     70                  EXTI_ClearITPendingBit(IR_SENSOR_EXTI_LINE);
+   \                     ??EXTI9_5_IRQHandler_1: (+1)
+   \   0000002A   0xF44F 0x7000      MOV      R0,#+512
+   \   0000002E   0x.... 0x....      BL       EXTI_ClearITPendingBit
+     71              }
+     72          }
    \                     ??EXTI9_5_IRQHandler_0: (+1)
-   \   00000024   0xBD01             POP      {R0,PC}          ;; return
-     70          
+   \   00000032   0xBD01             POP      {R0,PC}          ;; return
+     73          
 
    \                                 In section .text, align 2, keep-with-next
-     71          void reset_ir_flag(void)
-     72          {
-     73              if (ir_interrupt_flag && ir_timer > 200)
+     74          void reset_ir_flag(void)
+     75          {
+     76              if (ir_interrupt_flag ) // && ir_timer > 200)
    \                     reset_ir_flag: (+1)
    \   00000000   0x....             LDR.N    R0,??DataTable3_1
    \   00000002   0x7800             LDRB     R0,[R0, #+0]
    \   00000004   0x2800             CMP      R0,#+0
-   \   00000006   0xD009             BEQ.N    ??reset_ir_flag_0
-   \   00000008   0x....             LDR.N    R0,??DataTable3_2
-   \   0000000A   0x6800             LDR      R0,[R0, #+0]
-   \   0000000C   0x28C9             CMP      R0,#+201
-   \   0000000E   0xD305             BCC.N    ??reset_ir_flag_0
-     74              {
-     75                  ir_interrupt_flag = 0;
-   \   00000010   0x2000             MOVS     R0,#+0
-   \   00000012   0x....             LDR.N    R1,??DataTable3_1
-   \   00000014   0x7008             STRB     R0,[R1, #+0]
-     76                  ir_timer = 0; // Reset the timer
-   \   00000016   0x2000             MOVS     R0,#+0
-   \   00000018   0x....             LDR.N    R1,??DataTable3_2
-   \   0000001A   0x6008             STR      R0,[R1, #+0]
-     77              }
-     78          }
+   \   00000006   0xD005             BEQ.N    ??reset_ir_flag_0
+     77              {
+     78                  ir_interrupt_flag = 0;
+   \   00000008   0x2000             MOVS     R0,#+0
+   \   0000000A   0x....             LDR.N    R1,??DataTable3_1
+   \   0000000C   0x7008             STRB     R0,[R1, #+0]
+     79                  ir_timer = 0; // Reset the timer
+   \   0000000E   0x2000             MOVS     R0,#+0
+   \   00000010   0x....             LDR.N    R1,??DataTable3_2
+   \   00000012   0x6008             STR      R0,[R1, #+0]
+     80              }
+     81          }
    \                     ??reset_ir_flag_0: (+1)
-   \   0000001C   0x4770             BX       LR               ;; return
+   \   00000014   0x4770             BX       LR               ;; return
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable3:
@@ -240,8 +248,10 @@ C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\infrared.c
        8   EXTI9_5_IRQHandler
          8   -> EXTI_ClearITPendingBit
          8   -> EXTI_GetITStatus
+         8   -> GPIO_ReadInputDataBit
       16   infrared_exti_configure
         16   -> EXTI_Init
+        16   -> GPIO_EXTILineConfig
         16   -> NVIC_Init
        8   infrared_gpio_configure
          8   -> GPIO_Init
@@ -261,20 +271,20 @@ C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\infrared.c
        4  ??DataTable3
        4  ??DataTable3_1
        4  ??DataTable3_2
-      38  EXTI9_5_IRQHandler
-      64  infrared_exti_configure
+      52  EXTI9_5_IRQHandler
+      72  infrared_exti_configure
       32  infrared_gpio_configure
       16  infrared_init
       12  infrared_rcc_configure
        1  ir_interrupt_flag
        4  ir_timer
-      30  reset_ir_flag
+      22  reset_ir_flag
 
  
    5 bytes in section .bss
- 204 bytes in section .text
+ 218 bytes in section .text
  
- 204 bytes of CODE memory
+ 218 bytes of CODE memory
    5 bytes of DATA memory
 
 Errors: none
