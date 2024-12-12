@@ -5,12 +5,9 @@ extern int flag_left_obstacle;
 extern int flag_right_obstacle;
 extern int flag_back_obstacle;
 
-void motor_init(void)
-{
-    motor_rcc_configure();
-    motor_gpio_configure();
-    motor_mode = MOTOR_AUTO;
-}
+int motor_mode;
+unsigned int motor_delay = 1000000;
+
 
 void motor_rcc_configure(void)
 {
@@ -68,17 +65,14 @@ void motor_gpio_configure(void)
     GPIO_Init(MOTOR_BR2_PORT, &GPIO_InitStructure);
 }
 
-void motor_control()
+void motor_init(void)
 {
-    if (motor_mode == MOTOR_MANUAL)
-    {
-        manual_control();
-    }
-    else if (motor_mode == MOTOR_AUTO)
-    {
-        auto_control();
-    }
+    motor_rcc_configure();
+    motor_gpio_configure();
+    motor_mode = MOTOR_AUTO;
 }
+
+
 
 void manual_control(void)
 {
@@ -129,6 +123,18 @@ void auto_control()
     else
     {
         stop();
+    }
+}
+
+void motor_control()
+{
+    if (motor_mode == MOTOR_MANUAL)
+    {
+        manual_control();
+    }
+    else if (motor_mode == MOTOR_AUTO)
+    {
+        auto_control();
     }
 }
 

@@ -44,8 +44,6 @@
 #define MOTOR_MANUAL 0
 #define MOTOR_AUTO 1
 
-int motor_mode;
-unsigned int motor_delay = 1000000;
 
 void motor_init(void);
 

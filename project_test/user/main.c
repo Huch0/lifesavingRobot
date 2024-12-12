@@ -3,6 +3,7 @@
 #include "stm32f10x_gpio.h"
 #include "stm32f10x_usart.h"
 #include "stm32f10x_rcc.h"
+#include "stm32f10x_it.h"
 #include "misc.h"
 
 #include "motor.h"
@@ -11,7 +12,7 @@
 #include "infrared.h"
 
 // motor.h
-// extern int motor_mode;
+//extern int motor_mode;
 
 // ultra_sonic.h
 extern ultra_sonic us_front;
@@ -22,7 +23,7 @@ extern ultra_sonic us_back;
 // infrared.h
 extern volatile uint8_t ir_interrupt_flag;
 extern volatile uint32_t ir_timer;
-
+/*
 void SysTick_init(void)
 {
     // Calculate the reload value for 1ms interval
@@ -49,11 +50,12 @@ void SysTick_Handler(void)
         ir_timer++;
     }
 }
+*/
 
 int main()
 {
     SystemInit();
-    SysTick_init();
+    //SysTick_init();
 
     motor_init();
     ultra_sonic_init();
@@ -64,9 +66,11 @@ int main()
     {
         // update the obstacle flags
         update_obstacle_flags();
+        printf("us_f: %d | l: %d | r: %d | b: %d\n", us_front.distance, us_left.distance, us_right.distance, us_back.distance);
+        
 
         // control the motor based on the mode
-        motor_control();
+        // motor_control();
 
         // check the infrared sensor flag
         if (ir_interrupt_flag)

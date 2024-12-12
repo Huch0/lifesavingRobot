@@ -341,13 +341,12 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>C:\Users\pnu2\Downloads\project_test\project_test\libraries\CMSIS\DeviceSupport</state>
-                    <state>C:\Users\pnu2\Downloads\project_test\project_test\libraries\CMSIS\DeviceSupport\Startup</state>
-                    <state>C:\Users\pnu2\Downloads\project_test\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\inc</state>
-                    <state>C:\Users\pnu2\Downloads\project_test\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\src</state>
-                    <state>C:\Users\pnu2\Downloads\project_test\project_test\libraries\LCD</state>
-                    <state>C:\Users\pnu2\Downloads\project_test\project_test\user</state>
-                    <state>C:\Users\pnu2\Downloads\project_test\project_test\user\inc</state>
+                    <state>C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\CMSIS\DeviceSupport</state>
+                    <state>C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\CMSIS\DeviceSupport\Startup</state>
+                    <state>C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\STM32F10x_StdPeriph_Driver_v3.5\inc</state>
+                    <state>C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\STM32F10x_StdPeriph_Driver_v3.5\src</state>
+                    <state>C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user</state>
+                    <state>C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\inc</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -2245,10 +2244,22 @@
             </file>
         </group>
         <file>
+            <name>$PROJ_DIR$\user\bluetooth.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\user\bluetooth.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\user\delay.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\user\delay.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\user\infrared.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\user\infrared.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\user\main.c</name>
@@ -2261,6 +2272,12 @@
         </file>
         <file>
             <name>$PROJ_DIR$\user\stm32f10x_it.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\user\ultra_sonic.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\user\ultra_sonic.h</name>
         </file>
     </group>
 </project>

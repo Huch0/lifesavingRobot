@@ -1,44 +1,46 @@
 ###############################################################################
 #
-# IAR ANSI C/C++ Compiler V8.22.1.15669/W32 for ARM       04/Dec/2024  19:37:23
+# IAR ANSI C/C++ Compiler V8.22.1.15669/W32 for ARM       12/Dec/2024  15:25:58
 # Copyright 1999-2018 IAR Systems AB.
 #
 #    Cpu mode     =  thumb
 #    Endian       =  little
 #    Source file  =  
-#        C:\Users\pnu2\Downloads\project_test\project_test\Libraries\STM32F10x_StdPeriph_Driver_v3.5\src\stm32f10x_cec.c
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\STM32F10x_StdPeriph_Driver_v3.5\src\stm32f10x_cec.c
 #    Command line =  
-#        -f C:\Users\pnu2\AppData\Local\Temp\EWB37F.tmp
-#        (C:\Users\pnu2\Downloads\project_test\project_test\Libraries\STM32F10x_StdPeriph_Driver_v3.5\src\stm32f10x_cec.c
+#        -f C:\Users\pnu2\AppData\Local\Temp\EW75E8.tmp
+#        (C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\STM32F10x_StdPeriph_Driver_v3.5\src\stm32f10x_cec.c
 #        -D USE_STDPERIPH_DRIVER -D STM32F10X_CL -lC
-#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\List -o
-#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\Obj --no_cse
-#        --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering
-#        --no_scheduling --debug --endian=little --cpu=Cortex-M3 -e --fpu=None
-#        --dlib_config "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Debug\List
+#        -o
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Debug\Obj
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench
 #        8.0\arm\INC\c\DLib_Config_Normal.h" -I
-#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\CMSIS\DeviceSupport\
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\CMSIS\DeviceSupport\
 #        -I
-#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\CMSIS\DeviceSupport\Startup\
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\CMSIS\DeviceSupport\Startup\
 #        -I
-#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\inc\
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\STM32F10x_StdPeriph_Driver_v3.5\inc\
 #        -I
-#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\src\
-#        -I C:\Users\pnu2\Downloads\project_test\project_test\libraries\LCD\ -I
-#        C:\Users\pnu2\Downloads\project_test\project_test\user\ -I
-#        C:\Users\pnu2\Downloads\project_test\project_test\user\inc\ -Ol -I
-#        "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\STM32F10x_StdPeriph_Driver_v3.5\src\
+#        -I C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\
+#        -I
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\inc\
+#        -Ol -I "C:\Program Files (x86)\IAR Systems\Embedded Workbench
 #        8.0\arm\CMSIS\Core\Include\" -I "C:\Program Files (x86)\IAR
 #        Systems\Embedded Workbench 8.0\arm\CMSIS\DSP\Include\")
 #    Locale       =  C
 #    List file    =  
-#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\List\stm32f10x_cec.lst
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Debug\List\stm32f10x_cec.lst
 #    Object file  =  
-#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\Obj\stm32f10x_cec.o
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Debug\Obj\stm32f10x_cec.o
 #
 ###############################################################################
 
-C:\Users\pnu2\Downloads\project_test\project_test\Libraries\STM32F10x_StdPeriph_Driver_v3.5\src\stm32f10x_cec.c
+C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\STM32F10x_StdPeriph_Driver_v3.5\src\stm32f10x_cec.c
       1          /**
       2            ******************************************************************************
       3            * @file    stm32f10x_cec.c

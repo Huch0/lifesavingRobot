@@ -2,8 +2,67 @@
 
 #define US_TIMEOUT 30000 // Timeout for echo signal in microseconds
 
-#define US_TIMER TIM2
-#define US_TIMER_RCC RCC_APB1Periph_TIM2
+#define US_TIMER_f TIM2
+#define US_TIMER_f_RCC RCC_APB1Periph_TIM2
+
+#define US_TIMER_l TIM3
+#define US_TIMER_l_RCC RCC_APB1Periph_TIM3
+
+#define US_TIMER_r TIM4
+#define US_TIMER_r_RCC RCC_APB1Periph_TIM4
+
+#define US_TIMER_b TIM5
+#define US_TIMER_b_RCC RCC_APB1Periph_TIM5
+
+
+ultra_sonic us_front = {
+    .trig_port = GPIOA,
+    .trig_pin = GPIO_Pin_0,
+    .trig_rcc = RCC_APB2Periph_GPIOA,
+    .echo_port = GPIOA,
+    .echo_pin = GPIO_Pin_1,
+    .echo_rcc = RCC_APB2Periph_GPIOA,
+    .distance = SAFE_DISTANCE + 1,
+    .timer = US_TIMER_f
+};
+
+ultra_sonic us_left = {
+    .trig_port = GPIOA,
+    .trig_pin = GPIO_Pin_2,
+    .trig_rcc = RCC_APB2Periph_GPIOA,
+    .echo_port = GPIOA,
+    .echo_pin = GPIO_Pin_8,
+    .echo_rcc = RCC_APB2Periph_GPIOA,
+    .distance = SAFE_DISTANCE + 1,
+    .timer = US_TIMER_l
+};
+
+ultra_sonic us_right = {
+    .trig_port = GPIOA,
+    .trig_pin = GPIO_Pin_4,
+    .trig_rcc = RCC_APB2Periph_GPIOA,
+    .echo_port = GPIOA,
+    .echo_pin = GPIO_Pin_5,
+    .echo_rcc = RCC_APB2Periph_GPIOA,
+    .distance = SAFE_DISTANCE + 1,
+    .timer = US_TIMER_r
+};
+
+ultra_sonic us_back = {
+    .trig_port = GPIOA,
+    .trig_pin = GPIO_Pin_6,
+    .trig_rcc = RCC_APB2Periph_GPIOA,
+    .echo_port = GPIOA,
+    .echo_pin = GPIO_Pin_7,
+    .echo_rcc = RCC_APB2Periph_GPIOA,
+    .distance = SAFE_DISTANCE + 1,
+    .timer = US_TIMER_b
+};
+
+int flag_front_obstacle = 0;
+int flag_left_obstacle = 0;
+int flag_right_obstacle = 0;
+int flag_back_obstacle = 0;
 
 void ultra_sonic_init(void)
 {
@@ -26,7 +85,10 @@ void ultra_sonic_rcc_configure(void)
     RCC_APB2PeriphClockCmd(us_back.trig_rcc, ENABLE);
     RCC_APB2PeriphClockCmd(us_back.echo_rcc, ENABLE);
 
-    RCC_APB1PeriphClockCmd(US_TIMER_RCC, ENABLE);
+    RCC_APB1PeriphClockCmd(US_TIMER_f_RCC, ENABLE);
+    RCC_APB1PeriphClockCmd(US_TIMER_l_RCC, ENABLE);
+    RCC_APB1PeriphClockCmd(US_TIMER_r_RCC, ENABLE);
+    RCC_APB1PeriphClockCmd(US_TIMER_b_RCC, ENABLE);
 }
 
 void ultra_sonic_gpio_configure(void)
@@ -59,9 +121,36 @@ void ultra_sonic_timer_configure(void)
     TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
     TIM_BaseStruct.TIM_Period = 0xFFFF;
     TIM_BaseStruct.TIM_ClockDivision = TIM_CKD_DIV1;
-    TIM_TimeBaseInit(US_TIMER, &TIM_BaseStruct);
+    TIM_TimeBaseInit(US_TIMER_f, &TIM_BaseStruct);
 
-    TIM_Cmd(US_TIMER, ENABLE);
+    TIM_Cmd(US_TIMER_f, ENABLE);
+    
+
+    TIM_BaseStruct.TIM_Prescaler = (SystemCoreClock / 1000000) - 1; // 1 µs resolution
+    TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
+    TIM_BaseStruct.TIM_Period = 0xFFFF;
+    TIM_BaseStruct.TIM_ClockDivision = TIM_CKD_DIV1;
+    TIM_TimeBaseInit(US_TIMER_l, &TIM_BaseStruct);
+
+    TIM_Cmd(US_TIMER_l, ENABLE);
+    
+
+    TIM_BaseStruct.TIM_Prescaler = (SystemCoreClock / 1000000) - 1; // 1 µs resolution
+    TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
+    TIM_BaseStruct.TIM_Period = 0xFFFF;
+    TIM_BaseStruct.TIM_ClockDivision = TIM_CKD_DIV1;
+    TIM_TimeBaseInit(US_TIMER_r, &TIM_BaseStruct);
+
+    TIM_Cmd(US_TIMER_r, ENABLE);
+    
+
+    TIM_BaseStruct.TIM_Prescaler = (SystemCoreClock / 1000000) - 1; // 1 µs resolution
+    TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
+    TIM_BaseStruct.TIM_Period = 0xFFFF;
+    TIM_BaseStruct.TIM_ClockDivision = TIM_CKD_DIV1;
+    TIM_TimeBaseInit(US_TIMER_b, &TIM_BaseStruct);
+
+    TIM_Cmd(US_TIMER_b, ENABLE);
 }
 
 void update_obstacle_flags(void)
@@ -82,25 +171,26 @@ uint32_t measure_distance(ultra_sonic *us)
     GPIO_ResetBits(us->trig_port, us->trig_pin);
 
     // Wait for the echo pin to go high
-    start_time = TIM_GetCounter(US_TIMER);
+    start_time = TIM_GetCounter(us->timer);
+    //printf("start_time1: %d\n", start_time);
     while (!GPIO_ReadInputDataBit(us->echo_port, us->echo_pin))
     {
-        if (((TIM_GetCounter(US_TIMER) - start_time) & 0xFFFF) > US_TIMEOUT)
+        if (((TIM_GetCounter(us->timer) - start_time) & 0xFFFF) > US_TIMEOUT)
         {
             return SAFE_DISTANCE + 1; // Timeout condition
         }
     }
 
     // Measure the high pulse duration
-    start_time = TIM_GetCounter(US_TIMER);
+    start_time = TIM_GetCounter(us->timer);
     while (GPIO_ReadInputDataBit(us->echo_port, us->echo_pin))
     {
-        if (((TIM_GetCounter(US_TIMER) - start_time) & 0xFFFF) > US_TIMEOUT)
+        if (((TIM_GetCounter(us->timer) - start_time) & 0xFFFF) > US_TIMEOUT)
         {
             return SAFE_DISTANCE + 1; // Timeout condition
         }
     }
-    pulse_duration = ((TIM_GetCounter(US_TIMER) - start_time) & 0xFFFF);
+    pulse_duration = ((TIM_GetCounter(us->timer) - start_time) & 0xFFFF);
 
     // Calculate and return distance (in cm)
     us->distance = (pulse_duration * 34300) / (2 * 1000000);

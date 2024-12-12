@@ -1,138 +1,754 @@
 ###############################################################################
 #
-# IAR ANSI C/C++ Compiler V8.22.1.15669/W32 for ARM       05/Dec/2024  20:43:23
+# IAR ANSI C/C++ Compiler V8.22.1.15669/W32 for ARM       12/Dec/2024  16:21:41
 # Copyright 1999-2018 IAR Systems AB.
 #
 #    Cpu mode     =  thumb
 #    Endian       =  little
 #    Source file  =  
-#        C:\Users\pnu2\Downloads\project_test\project_test\user\ultra_sonic.c
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\ultra_sonic.c
 #    Command line =  
-#        -f C:\Users\pnu2\AppData\Local\Temp\EW7B8C.tmp
-#        (C:\Users\pnu2\Downloads\project_test\project_test\user\ultra_sonic.c
+#        -f C:\Users\pnu2\AppData\Local\Temp\EW7A93.tmp
+#        (C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\ultra_sonic.c
 #        -D USE_STDPERIPH_DRIVER -D STM32F10X_CL -lC
-#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\List -o
-#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\Obj --no_cse
-#        --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering
-#        --no_scheduling --debug --endian=little --cpu=Cortex-M3 -e --fpu=None
-#        --dlib_config "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Debug\List
+#        -o
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Debug\Obj
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program Files
+#        (x86)\IAR Systems\Embedded Workbench
 #        8.0\arm\INC\c\DLib_Config_Normal.h" -I
-#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\CMSIS\DeviceSupport\
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\CMSIS\DeviceSupport\
 #        -I
-#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\CMSIS\DeviceSupport\Startup\
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\CMSIS\DeviceSupport\Startup\
 #        -I
-#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\inc\
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\STM32F10x_StdPeriph_Driver_v3.5\inc\
 #        -I
-#        C:\Users\pnu2\Downloads\project_test\project_test\libraries\STM32F10x_StdPeriph_Driver_v3.5\src\
-#        -I C:\Users\pnu2\Downloads\project_test\project_test\libraries\LCD\ -I
-#        C:\Users\pnu2\Downloads\project_test\project_test\user\ -I
-#        C:\Users\pnu2\Downloads\project_test\project_test\user\inc\ -Ol -I
-#        "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Libraries\STM32F10x_StdPeriph_Driver_v3.5\src\
+#        -I C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\
+#        -I
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\inc\
+#        -Ol -I "C:\Program Files (x86)\IAR Systems\Embedded Workbench
 #        8.0\arm\CMSIS\Core\Include\" -I "C:\Program Files (x86)\IAR
 #        Systems\Embedded Workbench 8.0\arm\CMSIS\DSP\Include\")
 #    Locale       =  C
 #    List file    =  
-#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\List\ultra_sonic.lst
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Debug\List\ultra_sonic.lst
 #    Object file  =  
-#        C:\Users\pnu2\Downloads\project_test\project_test\Debug\Obj\ultra_sonic.o
+#        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Debug\Obj\ultra_sonic.o
 #
 ###############################################################################
 
-C:\Users\pnu2\Downloads\project_test\project_test\user\ultra_sonic.c
+C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\ultra_sonic.c
       1          #include "ultra_sonic.h"
       2          
-      3          void ultra_sonic_init(void)
-      4          {
-      5              ultra_sonic_rcc_configure();
-      6              ultra_sonic_gpio_configure();
-      7              ultra_sonic_exti_configure();
-      8              ultra_sonic_timer_configure();
-      9          }
+      3          #define US_TIMEOUT 30000 // Timeout for echo signal in microseconds
+      4          
+      5          #define US_TIMER_f TIM2
+      6          #define US_TIMER_f_RCC RCC_APB1Periph_TIM2
+      7          
+      8          #define US_TIMER_l TIM3
+      9          #define US_TIMER_l_RCC RCC_APB1Periph_TIM3
      10          
-     11          void ultra_sonic_rcc_configure(void)
-     12          {
-     13              RCC_APB2PeriphClockCmd(US_FRONT_ECHO_PORT, ENABLE);
-                                            ^
-Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
-          of type "uint32_t"
-     14              RCC_APB2PeriphClockCmd(US_FRONT_TRIG_PORT, ENABLE);
-                                            ^
-Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
-          of type "uint32_t"
-     15              RCC_APB2PeriphClockCmd(US_LEFT_ECHO_PORT, ENABLE);
-                                            ^
-Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
-          of type "uint32_t"
-     16              RCC_APB2PeriphClockCmd(US_LEFT_TRIG_PORT, ENABLE);
-                                            ^
-Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
-          of type "uint32_t"
-     17              RCC_APB2PeriphClockCmd(US_RIGHT_ECHO_PORT, ENABLE);
-                                            ^
-Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
-          of type "uint32_t"
-     18              RCC_APB2PeriphClockCmd(US_RIGHT_TRIG_PORT, ENABLE);
-                                            ^
-Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
-          of type "uint32_t"
-     19              RCC_APB2PeriphClockCmd(US_BACK_ECHO_PORT, ENABLE);
-                                            ^
-Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
-          of type "uint32_t"
-     20              RCC_APB2PeriphClockCmd(US_BACK_TRIG_PORT, ENABLE);
-                                            ^
-Error[Pe167]: argument of type "GPIO_TypeDef *" is incompatible with parameter
-          of type "uint32_t"
-     21          
-     22              RCC_APB1PeriphClockCmd(US_TIMER, ENABLE);
-                                            ^
-Error[Pe167]: argument of type "TIM_TypeDef *" is incompatible with parameter
-          of type "uint32_t"
-     23          }
-     24          
-     25          void ultra_sonic_gpio_configure(void)
-     26          {
-     27              GPIO_InitTypeDef GPIO_InitStructure;
-     28              GPIO_InitStructure.GPIO_Pin = US_FRONT_TRIG_PIN;
-     29              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-     30              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-     31              GPIO_Init(US_FRONT_TRIG_PORT, &GPIO_InitStructure);
-     32          
-     33              GPIO_InitStructure.GPIO_Pin = US_FRONT_ECHO_PIN;
-     34              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-     35              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
-     36              GPIO_Init(US_FRONT_ECHO_PORT, &GPIO_InitStructure);
-     37          
-     38              GPIO_InitStructure.GPIO_Pin = US_LEFT_TRIG_PIN;
-     39              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-     40              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-     41              GPIO_Init(US_LEFT_TRIG_PORT, &GPIO_InitStructure);
-     42          
-     43              GPIO_InitStructure.GPIO_Pin = US_LEFT_ECHO_PIN;
-     44              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-     45              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
-     46              GPIO_Init(US_LEFT_ECHO_PORT, &GPIO_InitStructure);
-     47          
-     48              GPIO_InitStructure.GPIO_Pin = US_RIGHT_TRIG_PIN;
-     49              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-     50              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-     51              GPIO_Init(US_RIGHT_TRIG_PORT, &GPIO_InitStructure);
-     52          
-     53              GPIO_InitStructure.GPIO_Pin = US_RIGHT_ECHO_PIN;
-     54              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-     55              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
-     56              GPIO_Init(US_RIGHT_ECHO_PORT, &GPIO_InitStructure);
-     57          
-     58              GPIO_InitStructure.GPIO_Pin = US_BACK_TRIG_PIN;
-     59              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-     60              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-     61              GPIO_Init(US_BACK_TRIG_PORT, &GPIO_InitStructure);
-     62          
-     63              GPIO_InitStructure.GPIO_Pin = US_BACK_ECHO_PIN;
-     64              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-     65              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
-     66              GPIO_Init(US_BACK_ECHO_PORT, &GPIO_InitStructure);
-     67          }
+     11          #define US_TIMER_r TIM4
+     12          #define US_TIMER_r_RCC RCC_APB1Periph_TIM4
+     13          
+     14          #define US_TIMER_b TIM5
+     15          #define US_TIMER_b_RCC RCC_APB1Periph_TIM5
+     16          
+     17          
 
-Errors: 9
-Warnings: none
+   \                                 In section .data, align 4
+     18          ultra_sonic us_front = {
+   \                     us_front:
+   \   00000000   0x40010800         DC32 40010800H
+   \   00000004   0x0001             DC16 1
+   \   00000006   0x00 0x00          DC8 0, 0
+   \   00000008   0x00000004         DC32 4, 40010800H
+   \              0x40010800   
+   \   00000010   0x0002             DC16 2
+   \   00000012   0x00 0x00          DC8 0, 0
+   \   00000014   0x00000004         DC32 4, 11, 40000000H
+   \              0x0000000B   
+   \              0x40000000   
+     19              .trig_port = GPIOA,
+     20              .trig_pin = GPIO_Pin_0,
+     21              .trig_rcc = RCC_APB2Periph_GPIOA,
+     22              .echo_port = GPIOA,
+     23              .echo_pin = GPIO_Pin_1,
+     24              .echo_rcc = RCC_APB2Periph_GPIOA,
+     25              .distance = SAFE_DISTANCE + 1,
+     26              .timer = US_TIMER_f
+     27          };
+     28          
+
+   \                                 In section .data, align 4
+     29          ultra_sonic us_left = {
+   \                     us_left:
+   \   00000000   0x40010800         DC32 40010800H
+   \   00000004   0x0004             DC16 4
+   \   00000006   0x00 0x00          DC8 0, 0
+   \   00000008   0x00000004         DC32 4, 40010800H
+   \              0x40010800   
+   \   00000010   0x0100             DC16 256
+   \   00000012   0x00 0x00          DC8 0, 0
+   \   00000014   0x00000004         DC32 4, 11, 40000400H
+   \              0x0000000B   
+   \              0x40000400   
+     30              .trig_port = GPIOA,
+     31              .trig_pin = GPIO_Pin_2,
+     32              .trig_rcc = RCC_APB2Periph_GPIOA,
+     33              .echo_port = GPIOA,
+     34              .echo_pin = GPIO_Pin_8,
+     35              .echo_rcc = RCC_APB2Periph_GPIOA,
+     36              .distance = SAFE_DISTANCE + 1,
+     37              .timer = US_TIMER_l
+     38          };
+     39          
+
+   \                                 In section .data, align 4
+     40          ultra_sonic us_right = {
+   \                     us_right:
+   \   00000000   0x40010800         DC32 40010800H
+   \   00000004   0x0010             DC16 16
+   \   00000006   0x00 0x00          DC8 0, 0
+   \   00000008   0x00000004         DC32 4, 40010800H
+   \              0x40010800   
+   \   00000010   0x0020             DC16 32
+   \   00000012   0x00 0x00          DC8 0, 0
+   \   00000014   0x00000004         DC32 4, 11, 40000800H
+   \              0x0000000B   
+   \              0x40000800   
+     41              .trig_port = GPIOA,
+     42              .trig_pin = GPIO_Pin_4,
+     43              .trig_rcc = RCC_APB2Periph_GPIOA,
+     44              .echo_port = GPIOA,
+     45              .echo_pin = GPIO_Pin_5,
+     46              .echo_rcc = RCC_APB2Periph_GPIOA,
+     47              .distance = SAFE_DISTANCE + 1,
+     48              .timer = US_TIMER_r
+     49          };
+     50          
+
+   \                                 In section .data, align 4
+     51          ultra_sonic us_back = {
+   \                     us_back:
+   \   00000000   0x40010800         DC32 40010800H
+   \   00000004   0x0040             DC16 64
+   \   00000006   0x00 0x00          DC8 0, 0
+   \   00000008   0x00000004         DC32 4, 40010800H
+   \              0x40010800   
+   \   00000010   0x0080             DC16 128
+   \   00000012   0x00 0x00          DC8 0, 0
+   \   00000014   0x00000004         DC32 4, 11, 40000C00H
+   \              0x0000000B   
+   \              0x40000C00   
+     52              .trig_port = GPIOA,
+     53              .trig_pin = GPIO_Pin_6,
+     54              .trig_rcc = RCC_APB2Periph_GPIOA,
+     55              .echo_port = GPIOA,
+     56              .echo_pin = GPIO_Pin_7,
+     57              .echo_rcc = RCC_APB2Periph_GPIOA,
+     58              .distance = SAFE_DISTANCE + 1,
+     59              .timer = US_TIMER_b
+     60          };
+     61          
+
+   \                                 In section .bss, align 4
+     62          int flag_front_obstacle = 0;
+   \                     flag_front_obstacle:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     63          int flag_left_obstacle = 0;
+   \                     flag_left_obstacle:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     64          int flag_right_obstacle = 0;
+   \                     flag_right_obstacle:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+     65          int flag_back_obstacle = 0;
+   \                     flag_back_obstacle:
+   \   00000000                      DS8 4
+     66          
+
+   \                                 In section .text, align 2, keep-with-next
+     67          void ultra_sonic_init(void)
+     68          {
+   \                     ultra_sonic_init: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     69              ultra_sonic_rcc_configure();
+   \   00000002   0x.... 0x....      BL       ultra_sonic_rcc_configure
+     70              ultra_sonic_gpio_configure();
+   \   00000006   0x.... 0x....      BL       ultra_sonic_gpio_configure
+     71              ultra_sonic_timer_configure();
+   \   0000000A   0x.... 0x....      BL       ultra_sonic_timer_configure
+     72          }
+   \   0000000E   0xBD01             POP      {R0,PC}          ;; return
+     73          
+
+   \                                 In section .text, align 2, keep-with-next
+     74          void ultra_sonic_rcc_configure(void)
+     75          {
+   \                     ultra_sonic_rcc_configure: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+     76              RCC_APB2PeriphClockCmd(us_front.trig_rcc, ENABLE);
+   \   00000002   0x2101             MOVS     R1,#+1
+   \   00000004   0x....             LDR.N    R0,??DataTable5
+   \   00000006   0x6880             LDR      R0,[R0, #+8]
+   \   00000008   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     77              RCC_APB2PeriphClockCmd(us_front.echo_rcc, ENABLE);
+   \   0000000C   0x2101             MOVS     R1,#+1
+   \   0000000E   0x....             LDR.N    R0,??DataTable5
+   \   00000010   0x6940             LDR      R0,[R0, #+20]
+   \   00000012   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     78          
+     79              RCC_APB2PeriphClockCmd(us_left.trig_rcc, ENABLE);
+   \   00000016   0x2101             MOVS     R1,#+1
+   \   00000018   0x....             LDR.N    R0,??DataTable5_1
+   \   0000001A   0x6880             LDR      R0,[R0, #+8]
+   \   0000001C   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     80              RCC_APB2PeriphClockCmd(us_left.echo_rcc, ENABLE);
+   \   00000020   0x2101             MOVS     R1,#+1
+   \   00000022   0x....             LDR.N    R0,??DataTable5_1
+   \   00000024   0x6940             LDR      R0,[R0, #+20]
+   \   00000026   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     81          
+     82              RCC_APB2PeriphClockCmd(us_right.trig_rcc, ENABLE);
+   \   0000002A   0x2101             MOVS     R1,#+1
+   \   0000002C   0x....             LDR.N    R0,??DataTable5_2
+   \   0000002E   0x6880             LDR      R0,[R0, #+8]
+   \   00000030   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     83              RCC_APB2PeriphClockCmd(us_right.echo_rcc, ENABLE);
+   \   00000034   0x2101             MOVS     R1,#+1
+   \   00000036   0x....             LDR.N    R0,??DataTable5_2
+   \   00000038   0x6940             LDR      R0,[R0, #+20]
+   \   0000003A   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     84          
+     85              RCC_APB2PeriphClockCmd(us_back.trig_rcc, ENABLE);
+   \   0000003E   0x2101             MOVS     R1,#+1
+   \   00000040   0x....             LDR.N    R0,??DataTable5_3
+   \   00000042   0x6880             LDR      R0,[R0, #+8]
+   \   00000044   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     86              RCC_APB2PeriphClockCmd(us_back.echo_rcc, ENABLE);
+   \   00000048   0x2101             MOVS     R1,#+1
+   \   0000004A   0x....             LDR.N    R0,??DataTable5_3
+   \   0000004C   0x6940             LDR      R0,[R0, #+20]
+   \   0000004E   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     87          
+     88              RCC_APB1PeriphClockCmd(US_TIMER_f_RCC, ENABLE);
+   \   00000052   0x2101             MOVS     R1,#+1
+   \   00000054   0x2001             MOVS     R0,#+1
+   \   00000056   0x.... 0x....      BL       RCC_APB1PeriphClockCmd
+     89              RCC_APB1PeriphClockCmd(US_TIMER_l_RCC, ENABLE);
+   \   0000005A   0x2101             MOVS     R1,#+1
+   \   0000005C   0x2002             MOVS     R0,#+2
+   \   0000005E   0x.... 0x....      BL       RCC_APB1PeriphClockCmd
+     90              RCC_APB1PeriphClockCmd(US_TIMER_r_RCC, ENABLE);
+   \   00000062   0x2101             MOVS     R1,#+1
+   \   00000064   0x2004             MOVS     R0,#+4
+   \   00000066   0x.... 0x....      BL       RCC_APB1PeriphClockCmd
+     91              RCC_APB1PeriphClockCmd(US_TIMER_b_RCC, ENABLE);
+   \   0000006A   0x2101             MOVS     R1,#+1
+   \   0000006C   0x2008             MOVS     R0,#+8
+   \   0000006E   0x.... 0x....      BL       RCC_APB1PeriphClockCmd
+     92          }
+   \   00000072   0xBD01             POP      {R0,PC}          ;; return
+     93          
+
+   \                                 In section .text, align 2, keep-with-next
+     94          void ultra_sonic_gpio_configure(void)
+     95          {
+   \                     ultra_sonic_gpio_configure: (+1)
+   \   00000000   0xB5F8             PUSH     {R3-R7,LR}
+     96              us_gpio_config(us_front);
+   \   00000002   0x....             LDR.N    R1,??DataTable5
+   \   00000004   0xB084             SUB      SP,SP,#+16
+   \   00000006   0x4668             MOV      R0,SP
+   \   00000008   0x2220             MOVS     R2,#+32
+   \   0000000A   0x.... 0x....      BL       __aeabi_memcpy4
+   \   0000000E   0xBC0F             POP      {R0-R3}
+   \   00000010   0x.... 0x....      BL       us_gpio_config
+     97              us_gpio_config(us_left);
+   \   00000014   0x....             LDR.N    R1,??DataTable5_1
+   \   00000016   0xB084             SUB      SP,SP,#+16
+   \   00000018   0x4668             MOV      R0,SP
+   \   0000001A   0x2220             MOVS     R2,#+32
+   \   0000001C   0x.... 0x....      BL       __aeabi_memcpy4
+   \   00000020   0xBC0F             POP      {R0-R3}
+   \   00000022   0x.... 0x....      BL       us_gpio_config
+     98              us_gpio_config(us_right);
+   \   00000026   0x....             LDR.N    R1,??DataTable5_2
+   \   00000028   0xB084             SUB      SP,SP,#+16
+   \   0000002A   0x4668             MOV      R0,SP
+   \   0000002C   0x2220             MOVS     R2,#+32
+   \   0000002E   0x.... 0x....      BL       __aeabi_memcpy4
+   \   00000032   0xBC0F             POP      {R0-R3}
+   \   00000034   0x.... 0x....      BL       us_gpio_config
+     99              us_gpio_config(us_back);
+   \   00000038   0x....             LDR.N    R1,??DataTable5_3
+   \   0000003A   0xB084             SUB      SP,SP,#+16
+   \   0000003C   0x4668             MOV      R0,SP
+   \   0000003E   0x2220             MOVS     R2,#+32
+   \   00000040   0x.... 0x....      BL       __aeabi_memcpy4
+   \   00000044   0xBC0F             POP      {R0-R3}
+   \   00000046   0x.... 0x....      BL       us_gpio_config
+    100          }
+   \   0000004A   0xB005             ADD      SP,SP,#+20
+   \   0000004C   0xBD00             POP      {PC}             ;; return
+    101          
+
+   \                                 In section .text, align 2, keep-with-next
+    102          void us_gpio_config(ultra_sonic us)
+    103          {
+   \                     us_gpio_config: (+1)
+   \   00000000   0xB40F             PUSH     {R0-R3}
+   \   00000002   0xB580             PUSH     {R7,LR}
+    104              GPIO_InitTypeDef GPIO_InitStructure;
+    105              GPIO_InitStructure.GPIO_Pin = us.trig_pin;
+   \   00000004   0xF8BD 0x000C      LDRH     R0,[SP, #+12]
+   \   00000008   0xF8AD 0x0000      STRH     R0,[SP, #+0]
+    106              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+   \   0000000C   0x2003             MOVS     R0,#+3
+   \   0000000E   0xF88D 0x0002      STRB     R0,[SP, #+2]
+    107              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+   \   00000012   0x2010             MOVS     R0,#+16
+   \   00000014   0xF88D 0x0003      STRB     R0,[SP, #+3]
+    108              GPIO_Init(us.trig_port, &GPIO_InitStructure);
+   \   00000018   0x4669             MOV      R1,SP
+   \   0000001A   0x9802             LDR      R0,[SP, #+8]
+   \   0000001C   0x.... 0x....      BL       GPIO_Init
+    109          
+    110              GPIO_InitStructure.GPIO_Pin = us.echo_pin;
+   \   00000020   0xF8BD 0x0018      LDRH     R0,[SP, #+24]
+   \   00000024   0xF8AD 0x0000      STRH     R0,[SP, #+0]
+    111              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+   \   00000028   0x2003             MOVS     R0,#+3
+   \   0000002A   0xF88D 0x0002      STRB     R0,[SP, #+2]
+    112              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+   \   0000002E   0x2028             MOVS     R0,#+40
+   \   00000030   0xF88D 0x0003      STRB     R0,[SP, #+3]
+    113              GPIO_Init(us.echo_port, &GPIO_InitStructure);
+   \   00000034   0x4669             MOV      R1,SP
+   \   00000036   0x9805             LDR      R0,[SP, #+20]
+   \   00000038   0x.... 0x....      BL       GPIO_Init
+    114          }
+   \   0000003C   0xBC01             POP      {R0}
+   \   0000003E   0xF85D 0xFB14      LDR      PC,[SP], #+20    ;; return
+    115          
+
+   \                                 In section .text, align 2, keep-with-next
+    116          void ultra_sonic_timer_configure(void)
+    117          {
+   \                     ultra_sonic_timer_configure: (+1)
+   \   00000000   0xB5E0             PUSH     {R5-R7,LR}
+    118              TIM_TimeBaseInitTypeDef TIM_BaseStruct;
+    119          
+    120              TIM_BaseStruct.TIM_Prescaler = (SystemCoreClock / 1000000) - 1; // 1 @s resolution
+   \   00000002   0x....             LDR.N    R0,??DataTable5_4
+   \   00000004   0x6800             LDR      R0,[R0, #+0]
+   \   00000006   0x....             LDR.N    R1,??DataTable5_5  ;; 0xf4240
+   \   00000008   0xFBB0 0xF0F1      UDIV     R0,R0,R1
+   \   0000000C   0x1E40             SUBS     R0,R0,#+1
+   \   0000000E   0xF8AD 0x0000      STRH     R0,[SP, #+0]
+    121              TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
+   \   00000012   0x2000             MOVS     R0,#+0
+   \   00000014   0xF8AD 0x0002      STRH     R0,[SP, #+2]
+    122              TIM_BaseStruct.TIM_Period = 0xFFFF;
+   \   00000018   0xF64F 0x70FF      MOVW     R0,#+65535
+   \   0000001C   0xF8AD 0x0004      STRH     R0,[SP, #+4]
+    123              TIM_BaseStruct.TIM_ClockDivision = TIM_CKD_DIV1;
+   \   00000020   0x2000             MOVS     R0,#+0
+   \   00000022   0xF8AD 0x0006      STRH     R0,[SP, #+6]
+    124              TIM_TimeBaseInit(US_TIMER_f, &TIM_BaseStruct);
+   \   00000026   0x4669             MOV      R1,SP
+   \   00000028   0xF05F 0x4080      MOVS     R0,#+1073741824
+   \   0000002C   0x.... 0x....      BL       TIM_TimeBaseInit
+    125          
+    126              TIM_Cmd(US_TIMER_f, ENABLE);
+   \   00000030   0x2101             MOVS     R1,#+1
+   \   00000032   0xF05F 0x4080      MOVS     R0,#+1073741824
+   \   00000036   0x.... 0x....      BL       TIM_Cmd
+    127              
+    128          
+    129              TIM_BaseStruct.TIM_Prescaler = (SystemCoreClock / 1000000) - 1; // 1 @s resolution
+   \   0000003A   0x....             LDR.N    R0,??DataTable5_4
+   \   0000003C   0x6800             LDR      R0,[R0, #+0]
+   \   0000003E   0x....             LDR.N    R1,??DataTable5_5  ;; 0xf4240
+   \   00000040   0xFBB0 0xF0F1      UDIV     R0,R0,R1
+   \   00000044   0x1E40             SUBS     R0,R0,#+1
+   \   00000046   0xF8AD 0x0000      STRH     R0,[SP, #+0]
+    130              TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
+   \   0000004A   0x2000             MOVS     R0,#+0
+   \   0000004C   0xF8AD 0x0002      STRH     R0,[SP, #+2]
+    131              TIM_BaseStruct.TIM_Period = 0xFFFF;
+   \   00000050   0xF64F 0x70FF      MOVW     R0,#+65535
+   \   00000054   0xF8AD 0x0004      STRH     R0,[SP, #+4]
+    132              TIM_BaseStruct.TIM_ClockDivision = TIM_CKD_DIV1;
+   \   00000058   0x2000             MOVS     R0,#+0
+   \   0000005A   0xF8AD 0x0006      STRH     R0,[SP, #+6]
+    133              TIM_TimeBaseInit(US_TIMER_l, &TIM_BaseStruct);
+   \   0000005E   0x4669             MOV      R1,SP
+   \   00000060   0x....             LDR.N    R0,??DataTable5_6  ;; 0x40000400
+   \   00000062   0x.... 0x....      BL       TIM_TimeBaseInit
+    134          
+    135              TIM_Cmd(US_TIMER_l, ENABLE);
+   \   00000066   0x2101             MOVS     R1,#+1
+   \   00000068   0x....             LDR.N    R0,??DataTable5_6  ;; 0x40000400
+   \   0000006A   0x.... 0x....      BL       TIM_Cmd
+    136              
+    137          
+    138              TIM_BaseStruct.TIM_Prescaler = (SystemCoreClock / 1000000) - 1; // 1 @s resolution
+   \   0000006E   0x....             LDR.N    R0,??DataTable5_4
+   \   00000070   0x6800             LDR      R0,[R0, #+0]
+   \   00000072   0x....             LDR.N    R1,??DataTable5_5  ;; 0xf4240
+   \   00000074   0xFBB0 0xF0F1      UDIV     R0,R0,R1
+   \   00000078   0x1E40             SUBS     R0,R0,#+1
+   \   0000007A   0xF8AD 0x0000      STRH     R0,[SP, #+0]
+    139              TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
+   \   0000007E   0x2000             MOVS     R0,#+0
+   \   00000080   0xF8AD 0x0002      STRH     R0,[SP, #+2]
+    140              TIM_BaseStruct.TIM_Period = 0xFFFF;
+   \   00000084   0xF64F 0x70FF      MOVW     R0,#+65535
+   \   00000088   0xF8AD 0x0004      STRH     R0,[SP, #+4]
+    141              TIM_BaseStruct.TIM_ClockDivision = TIM_CKD_DIV1;
+   \   0000008C   0x2000             MOVS     R0,#+0
+   \   0000008E   0xF8AD 0x0006      STRH     R0,[SP, #+6]
+    142              TIM_TimeBaseInit(US_TIMER_r, &TIM_BaseStruct);
+   \   00000092   0x4669             MOV      R1,SP
+   \   00000094   0x....             LDR.N    R0,??DataTable5_7  ;; 0x40000800
+   \   00000096   0x.... 0x....      BL       TIM_TimeBaseInit
+    143          
+    144              TIM_Cmd(US_TIMER_r, ENABLE);
+   \   0000009A   0x2101             MOVS     R1,#+1
+   \   0000009C   0x....             LDR.N    R0,??DataTable5_7  ;; 0x40000800
+   \   0000009E   0x.... 0x....      BL       TIM_Cmd
+    145              
+    146          
+    147              TIM_BaseStruct.TIM_Prescaler = (SystemCoreClock / 1000000) - 1; // 1 @s resolution
+   \   000000A2   0x....             LDR.N    R0,??DataTable5_4
+   \   000000A4   0x6800             LDR      R0,[R0, #+0]
+   \   000000A6   0x....             LDR.N    R1,??DataTable5_5  ;; 0xf4240
+   \   000000A8   0xFBB0 0xF0F1      UDIV     R0,R0,R1
+   \   000000AC   0x1E40             SUBS     R0,R0,#+1
+   \   000000AE   0xF8AD 0x0000      STRH     R0,[SP, #+0]
+    148              TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
+   \   000000B2   0x2000             MOVS     R0,#+0
+   \   000000B4   0xF8AD 0x0002      STRH     R0,[SP, #+2]
+    149              TIM_BaseStruct.TIM_Period = 0xFFFF;
+   \   000000B8   0xF64F 0x70FF      MOVW     R0,#+65535
+   \   000000BC   0xF8AD 0x0004      STRH     R0,[SP, #+4]
+    150              TIM_BaseStruct.TIM_ClockDivision = TIM_CKD_DIV1;
+   \   000000C0   0x2000             MOVS     R0,#+0
+   \   000000C2   0xF8AD 0x0006      STRH     R0,[SP, #+6]
+    151              TIM_TimeBaseInit(US_TIMER_b, &TIM_BaseStruct);
+   \   000000C6   0x4669             MOV      R1,SP
+   \   000000C8   0x....             LDR.N    R0,??DataTable5_8  ;; 0x40000c00
+   \   000000CA   0x.... 0x....      BL       TIM_TimeBaseInit
+    152          
+    153              TIM_Cmd(US_TIMER_b, ENABLE);
+   \   000000CE   0x2101             MOVS     R1,#+1
+   \   000000D0   0x....             LDR.N    R0,??DataTable5_8  ;; 0x40000c00
+   \   000000D2   0x.... 0x....      BL       TIM_Cmd
+    154          }
+   \   000000D6   0xBD07             POP      {R0-R2,PC}       ;; return
+    155          
+
+   \                                 In section .text, align 2, keep-with-next
+    156          void update_obstacle_flags(void)
+    157          {
+   \                     update_obstacle_flags: (+1)
+   \   00000000   0xB580             PUSH     {R7,LR}
+    158              flag_front_obstacle = measure_distance(&us_front) < SAFE_DISTANCE;
+   \   00000002   0x....             LDR.N    R0,??DataTable5
+   \   00000004   0x.... 0x....      BL       measure_distance
+   \   00000008   0x280A             CMP      R0,#+10
+   \   0000000A   0xD203             BCS.N    ??update_obstacle_flags_0
+   \   0000000C   0x2001             MOVS     R0,#+1
+   \   0000000E   0x....             LDR.N    R1,??DataTable5_9
+   \   00000010   0x6008             STR      R0,[R1, #+0]
+   \   00000012   0xE002             B.N      ??update_obstacle_flags_1
+   \                     ??update_obstacle_flags_0: (+1)
+   \   00000014   0x2000             MOVS     R0,#+0
+   \   00000016   0x....             LDR.N    R1,??DataTable5_9
+   \   00000018   0x6008             STR      R0,[R1, #+0]
+    159              flag_left_obstacle = measure_distance(&us_left) < SAFE_DISTANCE;
+   \                     ??update_obstacle_flags_1: (+1)
+   \   0000001A   0x....             LDR.N    R0,??DataTable5_1
+   \   0000001C   0x.... 0x....      BL       measure_distance
+   \   00000020   0x280A             CMP      R0,#+10
+   \   00000022   0xD203             BCS.N    ??update_obstacle_flags_2
+   \   00000024   0x2001             MOVS     R0,#+1
+   \   00000026   0x....             LDR.N    R1,??DataTable5_10
+   \   00000028   0x6008             STR      R0,[R1, #+0]
+   \   0000002A   0xE002             B.N      ??update_obstacle_flags_3
+   \                     ??update_obstacle_flags_2: (+1)
+   \   0000002C   0x2000             MOVS     R0,#+0
+   \   0000002E   0x....             LDR.N    R1,??DataTable5_10
+   \   00000030   0x6008             STR      R0,[R1, #+0]
+    160              flag_right_obstacle = measure_distance(&us_right) < SAFE_DISTANCE;
+   \                     ??update_obstacle_flags_3: (+1)
+   \   00000032   0x....             LDR.N    R0,??DataTable5_2
+   \   00000034   0x.... 0x....      BL       measure_distance
+   \   00000038   0x280A             CMP      R0,#+10
+   \   0000003A   0xD203             BCS.N    ??update_obstacle_flags_4
+   \   0000003C   0x2001             MOVS     R0,#+1
+   \   0000003E   0x....             LDR.N    R1,??DataTable5_11
+   \   00000040   0x6008             STR      R0,[R1, #+0]
+   \   00000042   0xE002             B.N      ??update_obstacle_flags_5
+   \                     ??update_obstacle_flags_4: (+1)
+   \   00000044   0x2000             MOVS     R0,#+0
+   \   00000046   0x....             LDR.N    R1,??DataTable5_11
+   \   00000048   0x6008             STR      R0,[R1, #+0]
+    161              flag_back_obstacle = measure_distance(&us_back) < SAFE_DISTANCE;
+   \                     ??update_obstacle_flags_5: (+1)
+   \   0000004A   0x....             LDR.N    R0,??DataTable5_3
+   \   0000004C   0x.... 0x....      BL       measure_distance
+   \   00000050   0x280A             CMP      R0,#+10
+   \   00000052   0xD203             BCS.N    ??update_obstacle_flags_6
+   \   00000054   0x2001             MOVS     R0,#+1
+   \   00000056   0x....             LDR.N    R1,??DataTable5_12
+   \   00000058   0x6008             STR      R0,[R1, #+0]
+   \   0000005A   0xE002             B.N      ??update_obstacle_flags_7
+   \                     ??update_obstacle_flags_6: (+1)
+   \   0000005C   0x2000             MOVS     R0,#+0
+   \   0000005E   0x....             LDR.N    R1,??DataTable5_12
+   \   00000060   0x6008             STR      R0,[R1, #+0]
+    162          }
+   \                     ??update_obstacle_flags_7: (+1)
+   \   00000062   0xBD01             POP      {R0,PC}          ;; return
+    163          
+
+   \                                 In section .text, align 2, keep-with-next
+    164          uint32_t measure_distance(ultra_sonic *us)
+    165          {
+   \                     measure_distance: (+1)
+   \   00000000   0xB538             PUSH     {R3-R5,LR}
+   \   00000002   0x0004             MOVS     R4,R0
+    166              uint32_t start_time, pulse_duration;
+    167          
+    168              // Trigger the ultrasonic sensor
+    169              GPIO_SetBits(us->trig_port, us->trig_pin);
+   \   00000004   0x88A1             LDRH     R1,[R4, #+4]
+   \   00000006   0x6820             LDR      R0,[R4, #+0]
+   \   00000008   0x.... 0x....      BL       GPIO_SetBits
+    170              delay_us(10); // 10 @s trigger pulse
+                     ^
+Warning[Pe223]: function "delay_us" declared implicitly
+   \   0000000C   0x200A             MOVS     R0,#+10
+   \   0000000E   0x.... 0x....      BL       delay_us
+    171              GPIO_ResetBits(us->trig_port, us->trig_pin);
+   \   00000012   0x88A1             LDRH     R1,[R4, #+4]
+   \   00000014   0x6820             LDR      R0,[R4, #+0]
+   \   00000016   0x.... 0x....      BL       GPIO_ResetBits
+    172          
+    173              // Wait for the echo pin to go high
+    174              start_time = TIM_GetCounter(us->timer);
+   \   0000001A   0x69E0             LDR      R0,[R4, #+28]
+   \   0000001C   0x.... 0x....      BL       TIM_GetCounter
+   \   00000020   0x0005             MOVS     R5,R0
+    175              //printf("start_time1: %d\n", start_time);
+    176              while (!GPIO_ReadInputDataBit(us->echo_port, us->echo_pin))
+   \                     ??measure_distance_0: (+1)
+   \   00000022   0x8A21             LDRH     R1,[R4, #+16]
+   \   00000024   0x68E0             LDR      R0,[R4, #+12]
+   \   00000026   0x.... 0x....      BL       GPIO_ReadInputDataBit
+   \   0000002A   0x2800             CMP      R0,#+0
+   \   0000002C   0xD10A             BNE.N    ??measure_distance_1
+    177              {
+    178                  if (((TIM_GetCounter(us->timer) - start_time) & 0xFFFF) > US_TIMEOUT)
+   \   0000002E   0x69E0             LDR      R0,[R4, #+28]
+   \   00000030   0x.... 0x....      BL       TIM_GetCounter
+   \   00000034   0x1B40             SUBS     R0,R0,R5
+   \   00000036   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000038   0xF247 0x5131      MOVW     R1,#+30001
+   \   0000003C   0x4288             CMP      R0,R1
+   \   0000003E   0xD3F0             BCC.N    ??measure_distance_0
+    179                  {
+    180                      return SAFE_DISTANCE + 1; // Timeout condition
+   \   00000040   0x200B             MOVS     R0,#+11
+   \   00000042   0xE021             B.N      ??measure_distance_2
+    181                  }
+    182              }
+    183          
+    184              // Measure the high pulse duration
+    185              start_time = TIM_GetCounter(us->timer);
+   \                     ??measure_distance_1: (+1)
+   \   00000044   0x69E0             LDR      R0,[R4, #+28]
+   \   00000046   0x.... 0x....      BL       TIM_GetCounter
+   \   0000004A   0x0005             MOVS     R5,R0
+    186              while (GPIO_ReadInputDataBit(us->echo_port, us->echo_pin))
+   \                     ??measure_distance_3: (+1)
+   \   0000004C   0x8A21             LDRH     R1,[R4, #+16]
+   \   0000004E   0x68E0             LDR      R0,[R4, #+12]
+   \   00000050   0x.... 0x....      BL       GPIO_ReadInputDataBit
+   \   00000054   0x2800             CMP      R0,#+0
+   \   00000056   0xD00A             BEQ.N    ??measure_distance_4
+    187              {
+    188                  if (((TIM_GetCounter(us->timer) - start_time) & 0xFFFF) > US_TIMEOUT)
+   \   00000058   0x69E0             LDR      R0,[R4, #+28]
+   \   0000005A   0x.... 0x....      BL       TIM_GetCounter
+   \   0000005E   0x1B40             SUBS     R0,R0,R5
+   \   00000060   0xB280             UXTH     R0,R0            ;; ZeroExt  R0,R0,#+16,#+16
+   \   00000062   0xF247 0x5131      MOVW     R1,#+30001
+   \   00000066   0x4288             CMP      R0,R1
+   \   00000068   0xD3F0             BCC.N    ??measure_distance_3
+    189                  {
+    190                      return SAFE_DISTANCE + 1; // Timeout condition
+   \   0000006A   0x200B             MOVS     R0,#+11
+   \   0000006C   0xE00C             B.N      ??measure_distance_2
+    191                  }
+    192              }
+    193              pulse_duration = ((TIM_GetCounter(us->timer) - start_time) & 0xFFFF);
+   \                     ??measure_distance_4: (+1)
+   \   0000006E   0x69E0             LDR      R0,[R4, #+28]
+   \   00000070   0x.... 0x....      BL       TIM_GetCounter
+   \   00000074   0x1B45             SUBS     R5,R0,R5
+   \   00000076   0xB2AD             UXTH     R5,R5            ;; ZeroExt  R5,R5,#+16,#+16
+    194          
+    195              // Calculate and return distance (in cm)
+    196              us->distance = (pulse_duration * 34300) / (2 * 1000000);
+   \   00000078   0xF248 0x50FC      MOVW     R0,#+34300
+   \   0000007C   0x4345             MULS     R5,R0,R5
+   \   0000007E   0x....             LDR.N    R0,??DataTable5_13  ;; 0x1e8480
+   \   00000080   0xFBB5 0xF0F0      UDIV     R0,R5,R0
+   \   00000084   0x61A0             STR      R0,[R4, #+24]
+    197              return us->distance;
+   \   00000086   0x69A0             LDR      R0,[R4, #+24]
+   \                     ??measure_distance_2: (+1)
+   \   00000088   0xBD32             POP      {R1,R4,R5,PC}    ;; return
+    198          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5:
+   \   00000000   0x........         DC32     us_front
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_1:
+   \   00000000   0x........         DC32     us_left
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_2:
+   \   00000000   0x........         DC32     us_right
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_3:
+   \   00000000   0x........         DC32     us_back
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_4:
+   \   00000000   0x........         DC32     SystemCoreClock
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_5:
+   \   00000000   0x000F4240         DC32     0xf4240
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_6:
+   \   00000000   0x40000400         DC32     0x40000400
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_7:
+   \   00000000   0x40000800         DC32     0x40000800
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_8:
+   \   00000000   0x40000C00         DC32     0x40000c00
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_9:
+   \   00000000   0x........         DC32     flag_front_obstacle
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_10:
+   \   00000000   0x........         DC32     flag_left_obstacle
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_11:
+   \   00000000   0x........         DC32     flag_right_obstacle
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_12:
+   \   00000000   0x........         DC32     flag_back_obstacle
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable5_13:
+   \   00000000   0x001E8480         DC32     0x1e8480
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      16   measure_distance
+        16   -> GPIO_ReadInputDataBit
+        16   -> GPIO_ResetBits
+        16   -> GPIO_SetBits
+        16   -> TIM_GetCounter
+        16   -> delay_us
+      40   ultra_sonic_gpio_configure
+        40   -> __aeabi_memcpy4
+        24   -> us_gpio_config
+       8   ultra_sonic_init
+         8   -> ultra_sonic_gpio_configure
+         8   -> ultra_sonic_rcc_configure
+         8   -> ultra_sonic_timer_configure
+       8   ultra_sonic_rcc_configure
+         8   -> RCC_APB1PeriphClockCmd
+         8   -> RCC_APB2PeriphClockCmd
+      16   ultra_sonic_timer_configure
+        16   -> TIM_Cmd
+        16   -> TIM_TimeBaseInit
+       8   update_obstacle_flags
+         8   -> measure_distance
+      24   us_gpio_config
+        24   -> GPIO_Init
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable5
+       4  ??DataTable5_1
+       4  ??DataTable5_10
+       4  ??DataTable5_11
+       4  ??DataTable5_12
+       4  ??DataTable5_13
+       4  ??DataTable5_2
+       4  ??DataTable5_3
+       4  ??DataTable5_4
+       4  ??DataTable5_5
+       4  ??DataTable5_6
+       4  ??DataTable5_7
+       4  ??DataTable5_8
+       4  ??DataTable5_9
+       4  flag_back_obstacle
+       4  flag_front_obstacle
+       4  flag_left_obstacle
+       4  flag_right_obstacle
+     138  measure_distance
+      78  ultra_sonic_gpio_configure
+      16  ultra_sonic_init
+     116  ultra_sonic_rcc_configure
+     216  ultra_sonic_timer_configure
+     100  update_obstacle_flags
+      32  us_back
+      32  us_front
+      66  us_gpio_config
+      32  us_left
+      32  us_right
+
+ 
+  16 bytes in section .bss
+ 128 bytes in section .data
+ 786 bytes in section .text
+ 
+ 786 bytes of CODE memory
+ 144 bytes of DATA memory
+
+Errors: none
+Warnings: 1

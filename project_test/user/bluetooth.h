@@ -6,6 +6,10 @@
 #include "misc.h"
 
 void bt_init(void);
+void bt_rcc_configure(void);
+void bt_gpio_configure(void);
+void bt_usart2_configure(void);
+void bt_nvic_configure(void);
 
 char bt_get_user_input(void);
 void bt_send_to_user(char *message);

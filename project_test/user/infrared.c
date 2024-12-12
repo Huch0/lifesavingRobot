@@ -1,5 +1,8 @@
 #include "infrared.h"
 
+volatile uint8_t ir_interrupt_flag = 0;
+volatile uint32_t ir_timer = 0;
+
 void infrared_init(void)
 {
     infrared_rcc_configure();
