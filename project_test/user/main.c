@@ -23,6 +23,9 @@ extern ultra_sonic us_back;
 extern volatile uint8_t ir_interrupt_flag;
 extern volatile uint32_t ir_timer;
 
+// bluetooth
+extern uint16_t is_connected;
+
 int main()
 {
     SystemInit();
@@ -31,25 +34,31 @@ int main()
     motor_init();
     ultra_sonic_init();
     bt_init();
-    infrared_init();
-
+    // infrared_init();
+    USART_SendData(USART1, 97);
+    
     while (1)
     {
-        // update the obstacle flags
-        update_obstacle_flags();
-        // printf("us_f: %d | l: %d | r: %d | b: %d\n", us_front.distance, us_left.distance, us_right.distance, us_back.distance);
-        
+      // USART_SendData(USART1, 97);
+      if (is_connected) {
+          // USART_SendData(USART1, 98);
+          // update the obstacle flags
+          // update_obstacle_flags();
+          // printf("us_f: %d | l: %d | r: %d | b: %d\n", us_front.distance, us_left.distance, us_right.distance, us_back.distance);
+          
 
-        // control the motor based on the mode
-        // motor_control();
-
-        // check the infrared sensor flag
-        if (ir_interrupt_flag)
-        {
-            // printf("human detected - check the camera\n");
-            //bt_send_to_user("human detected - check the camera\n");
-            reset_ir_flag(); // reset the flag after 200ms
-        }
+          // control the motor based on the mode
+          motor_control();
+          // printf("main loop\n");
+          // bt_send_to_user("human detected - check the camera\n");
+          // check the infrared sensor flag
+          if (ir_interrupt_flag)
+          {
+              // printf("human detected - check the camera\n");
+              bt_send_to_user("human detected - check the camera\n");
+              reset_ir_flag(); // reset the flag after 200ms
+          }
+      }
     }
 
     return 0;

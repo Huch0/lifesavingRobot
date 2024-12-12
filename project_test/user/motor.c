@@ -69,61 +69,90 @@ void motor_init(void)
 {
     motor_rcc_configure();
     motor_gpio_configure();
-    motor_mode = MOTOR_AUTO;
+    motor_mode = MOTOR_MANUAL;
 }
 
 
 
 void manual_control(void)
 {
-    char user_input = bt_get_user_input();
+    uint16_t user_input = bt_get_user_input();
     switch (user_input)
     {
-    case 'w':
+    case 119: //w
         go_forward();
+        bt_send_to_user("go forward\n");
         break;
-    case 's':
+    case 115: //s
         go_backward();
+        bt_send_to_user("go backward\n");
         break;
-    case 'a':
+    case 97: //a
         turn_left();
+        bt_send_to_user("turn left\n");
         break;
-    case 'd':
+    case 100: //d
         turn_right();
+        bt_send_to_user("turn right\n");
         break;
-    case 'x':
+    case 120: //x
         stop();
+        bt_send_to_user("stop\n");
         break;
-    case 'c':
+    case 99: //c
         motor_mode = MOTOR_AUTO;
+        bt_send_to_user("Auto mode activated\n");
         break;
     default:
         break;
     }
 }
 
+int auto_counter = 0;
 void auto_control()
 {
-    if (!flag_front_obstacle)
+    uint16_t user = bt_get_user_input();
+    //delay_us(10000);
+    //USART_SendData(USART1, 97);
+    //delay_us(10);
+    printf("%d\n", user);
+    if (user == 10)
+    {   
+        auto_counter ++;
+        if (auto_counter == 1) return;
+        auto_counter = 0;
+        motor_mode = MOTOR_MANUAL;
+        bt_send_to_user("Manual mode activated\n");
+        return;
+    }
+    else if (!flag_front_obstacle)
     {
         go_forward();
+        bt_send_to_user("go forward\n");
     }
     else if (!flag_left_obstacle)
     {
         turn_left();
+        bt_send_to_user("go left\n");
     }
     else if (!flag_right_obstacle)
     {
         turn_right();
+        bt_send_to_user("go right\n");
     }
     else if (!flag_back_obstacle)
     {
         go_backward();
+        bt_send_to_user("go backward\n");
     }
     else
     {
         stop();
+        bt_send_to_user("stop\n");
     }
+    delay_us(100000);
+    USART_SendData(USART1, user);
+    bt_send_to_user((char*)user);
 }
 
 void motor_control()

@@ -2,6 +2,9 @@
 #include "stm32f10x_gpio.h"
 #include "stm32f10x_rcc.h"
 #include "delay.h"
+#include "ultra_sonic.h"
+
+#include "bluetooth.h"
 
 // pin mapping
 // motor front left | PD2 | PD3

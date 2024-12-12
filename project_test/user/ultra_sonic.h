@@ -1,8 +1,12 @@
+#ifndef _ULTRA_
+#define _ULTRA_
+
 #include "stm32f10x.h"
 #include "stm32f10x_gpio.h"
 #include "stm32f10x_rcc.h"
 #include "stm32f10x_tim.h"
 #include "misc.h"
+
 
 typedef struct _ultra_sonic
 {
@@ -28,5 +32,5 @@ uint32_t measure_distance(ultra_sonic *us);
 
 
 #define SAFE_DISTANCE 10 // in cm
-
+#endif
 
