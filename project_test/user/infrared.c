@@ -37,7 +37,7 @@ void infrared_exti_configure(void)
     NVIC_Init(&NVIC_InitStructure);
 
     // Configure EXTI line
-    GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource9);
+    GPIO_EXTILineConfig(GPIO_PortSourceGPIOD, GPIO_PinSource10);
     EXTI_InitStructure.EXTI_Line = IR_SENSOR_EXTI_LINE;
     EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
     EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
@@ -53,27 +53,46 @@ void infrared_exti_configure(void)
  * The interrupt handler sends a message to the user to check the camera.
  */
 
-void EXTI9_5_IRQHandler(void)
+// void EXTI9_5_IRQHandler(void)
+// {
+//     if (EXTI_GetITStatus(IR_SENSOR_EXTI_LINE) != RESET)
+//     {
+//         if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_9) == Bit_SET)
+//         {
+//             if (!ir_interrupt_flag) // Check if the flag is already set
+//             {
+//                 ir_interrupt_flag = 1;
+
+//                 // Simulate debouncing with a delay or software timer
+//                 // Reset the flag after 200ms (implement this in main loop)
+//             }
+//         }
+
+//         EXTI_ClearITPendingBit(IR_SENSOR_EXTI_LINE);
+//     }
+// }
+void EXTI15_10_IRQn(void)
 {
     if (EXTI_GetITStatus(IR_SENSOR_EXTI_LINE) != RESET)
     {
-      if (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_9) == Bit_SET) {
-        if (!ir_interrupt_flag) // Check if the flag is already set
+        if (GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_10) == Bit_SET)
         {
-            ir_interrupt_flag = 1;
+            if (!ir_interrupt_flag) // Check if the flag is already set
+            {
+                ir_interrupt_flag = 1;
 
-            // Simulate debouncing with a delay or software timer
-            // Reset the flag after 200ms (implement this in main loop)
+                // Simulate debouncing with a delay or software timer
+                // Reset the flag after 200ms (implement this in main loop)
+            }
         }
-      }
-      
+
         EXTI_ClearITPendingBit(IR_SENSOR_EXTI_LINE);
     }
 }
 
 void reset_ir_flag(void)
 {
-    if (ir_interrupt_flag ) // && ir_timer > 200)
+    if (ir_interrupt_flag) // && ir_timer > 200)
     {
         ir_interrupt_flag = 0;
         ir_timer = 0; // Reset the timer

@@ -14,7 +14,6 @@
 #define US_TIMER_b TIM5
 #define US_TIMER_b_RCC RCC_APB1Periph_TIM5
 
-
 ultra_sonic us_front = {
     .trig_port = GPIOA,
     .trig_pin = GPIO_Pin_0,
@@ -23,30 +22,28 @@ ultra_sonic us_front = {
     .echo_pin = GPIO_Pin_1,
     .echo_rcc = RCC_APB2Periph_GPIOA,
     .distance = SAFE_DISTANCE + 1,
-    .timer = US_TIMER_f
-};
+    .timer = US_TIMER_f};
 
+// TODO: Swap ports of us_left <-> us_right.
 ultra_sonic us_left = {
     .trig_port = GPIOA,
-    .trig_pin = GPIO_Pin_2,
+    .trig_pin = GPIO_Pin_4, // GPIO_Pin_2,
     .trig_rcc = RCC_APB2Periph_GPIOA,
     .echo_port = GPIOA,
-    .echo_pin = GPIO_Pin_8,
+    .echo_pin = GPIO_Pin_5, // GPIO_Pin_8,
     .echo_rcc = RCC_APB2Periph_GPIOA,
     .distance = SAFE_DISTANCE + 1,
-    .timer = US_TIMER_l
-};
+    .timer = US_TIMER_l};
 
 ultra_sonic us_right = {
     .trig_port = GPIOA,
-    .trig_pin = GPIO_Pin_4,
+    .trig_pin = GPIO_Pin_2, // GPIO_Pin_4,
     .trig_rcc = RCC_APB2Periph_GPIOA,
     .echo_port = GPIOA,
-    .echo_pin = GPIO_Pin_5,
+    .echo_pin = GPIO_Pin_8, // GPIO_Pin_5,
     .echo_rcc = RCC_APB2Periph_GPIOA,
     .distance = SAFE_DISTANCE + 1,
-    .timer = US_TIMER_r
-};
+    .timer = US_TIMER_r};
 
 ultra_sonic us_back = {
     .trig_port = GPIOA,
@@ -56,8 +53,7 @@ ultra_sonic us_back = {
     .echo_pin = GPIO_Pin_7,
     .echo_rcc = RCC_APB2Periph_GPIOA,
     .distance = SAFE_DISTANCE + 1,
-    .timer = US_TIMER_b
-};
+    .timer = US_TIMER_b};
 
 int flag_front_obstacle = 0;
 int flag_left_obstacle = 0;
@@ -124,7 +120,6 @@ void ultra_sonic_timer_configure(void)
     TIM_TimeBaseInit(US_TIMER_f, &TIM_BaseStruct);
 
     TIM_Cmd(US_TIMER_f, ENABLE);
-    
 
     TIM_BaseStruct.TIM_Prescaler = (SystemCoreClock / 1000000) - 1; // 1 µs resolution
     TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
@@ -133,7 +128,6 @@ void ultra_sonic_timer_configure(void)
     TIM_TimeBaseInit(US_TIMER_l, &TIM_BaseStruct);
 
     TIM_Cmd(US_TIMER_l, ENABLE);
-    
 
     TIM_BaseStruct.TIM_Prescaler = (SystemCoreClock / 1000000) - 1; // 1 µs resolution
     TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
@@ -142,7 +136,6 @@ void ultra_sonic_timer_configure(void)
     TIM_TimeBaseInit(US_TIMER_r, &TIM_BaseStruct);
 
     TIM_Cmd(US_TIMER_r, ENABLE);
-    
 
     TIM_BaseStruct.TIM_Prescaler = (SystemCoreClock / 1000000) - 1; // 1 µs resolution
     TIM_BaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
@@ -172,7 +165,7 @@ uint32_t measure_distance(ultra_sonic *us)
 
     // Wait for the echo pin to go high
     start_time = TIM_GetCounter(us->timer);
-    //printf("start_time1: %d\n", start_time);
+    // printf("start_time1: %d\n", start_time);
     while (!GPIO_ReadInputDataBit(us->echo_port, us->echo_pin))
     {
         if (((TIM_GetCounter(us->timer) - start_time) & 0xFFFF) > US_TIMEOUT)
