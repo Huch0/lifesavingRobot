@@ -1,6 +1,6 @@
 #include "ultra_sonic.h"
 
-#define US_TIMEOUT 30000 // Timeout for echo signal in microseconds
+#define US_TIMEOUT 50000 // Timeout for echo signal in microseconds
 
 #define US_TIMER_f TIM2
 #define US_TIMER_f_RCC RCC_APB1Periph_TIM2
@@ -14,12 +14,13 @@
 #define US_TIMER_b TIM5
 #define US_TIMER_b_RCC RCC_APB1Periph_TIM5
 
+// PA0 / PA 1
 ultra_sonic us_front = {
     .trig_port = GPIOA,
-    .trig_pin = GPIO_Pin_0,
+    .trig_pin = GPIO_Pin_1,
     .trig_rcc = RCC_APB2Periph_GPIOA,
     .echo_port = GPIOA,
-    .echo_pin = GPIO_Pin_1,
+    .echo_pin = GPIO_Pin_0,
     .echo_rcc = RCC_APB2Periph_GPIOA,
     .distance = SAFE_DISTANCE + 1,
     .timer = US_TIMER_f};
@@ -35,22 +36,24 @@ ultra_sonic us_left = {
     .distance = SAFE_DISTANCE + 1,
     .timer = US_TIMER_l};
 
+// PA2 / PA8
 ultra_sonic us_right = {
     .trig_port = GPIOA,
-    .trig_pin = GPIO_Pin_2, // GPIO_Pin_4,
+    .trig_pin = GPIO_Pin_7, // GPIO_Pin_4,
     .trig_rcc = RCC_APB2Periph_GPIOA,
     .echo_port = GPIOA,
-    .echo_pin = GPIO_Pin_8, // GPIO_Pin_5,
+    .echo_pin = GPIO_Pin_6, // GPIO_Pin_5,
     .echo_rcc = RCC_APB2Periph_GPIOA,
     .distance = SAFE_DISTANCE + 1,
     .timer = US_TIMER_r};
 
+// PA6 / PA7
 ultra_sonic us_back = {
     .trig_port = GPIOA,
-    .trig_pin = GPIO_Pin_6,
+    .trig_pin = GPIO_Pin_2, // GPIO_Pin_6, 
     .trig_rcc = RCC_APB2Periph_GPIOA,
     .echo_port = GPIOA,
-    .echo_pin = GPIO_Pin_7,
+    .echo_pin = GPIO_Pin_8, // GPIO_Pin_7,
     .echo_rcc = RCC_APB2Periph_GPIOA,
     .distance = SAFE_DISTANCE + 1,
     .timer = US_TIMER_b};
@@ -170,7 +173,8 @@ uint32_t measure_distance(ultra_sonic *us)
     {
         if (((TIM_GetCounter(us->timer) - start_time) & 0xFFFF) > US_TIMEOUT)
         {
-            return SAFE_DISTANCE + 1; // Timeout condition
+            us->distance = SAFE_DISTANCE + 2; // Timeout condition
+            return us->distance;
         }
     }
 
@@ -180,7 +184,8 @@ uint32_t measure_distance(ultra_sonic *us)
     {
         if (((TIM_GetCounter(us->timer) - start_time) & 0xFFFF) > US_TIMEOUT)
         {
-            return SAFE_DISTANCE + 1; // Timeout condition
+            us->distance = SAFE_DISTANCE + 3; // Timeout condition
+            return us->distance;
         }
     }
     pulse_duration = ((TIM_GetCounter(us->timer) - start_time) & 0xFFFF);

@@ -70,6 +70,7 @@ void motor_init(void)
     motor_rcc_configure();
     motor_gpio_configure();
     motor_mode = MOTOR_MANUAL;
+    stop();
 }
 
 
@@ -77,9 +78,12 @@ void motor_init(void)
 void manual_control(void)
 {
     uint16_t user_input = bt_get_user_input();
+    
+    printf("%d\n", user_input);
     switch (user_input)
     {
     case 119: //w
+      printf("go forward\n");
         go_forward();
         bt_send_to_user("go forward\n");
         break;
@@ -116,7 +120,14 @@ void auto_control()
     //USART_SendData(USART1, 97);
     //delay_us(10);
     printf("%d\n", user);
-    if (user == 10)
+    if (user == 99) {
+        auto_counter = 0;
+        motor_mode = MOTOR_MANUAL;
+        bt_send_to_user("Manual mode activated\n");
+        return;
+    }
+      
+    if (user != 122)
     {   
         auto_counter ++;
         if (auto_counter == 1) return;
@@ -133,24 +144,32 @@ void auto_control()
     else if (!flag_left_obstacle)
     {
         turn_left();
-        bt_send_to_user("go left\n");
+        bt_send_to_user("turn left\n");
     }
     else if (!flag_right_obstacle)
     {
         turn_right();
-        bt_send_to_user("go right\n");
+        bt_send_to_user("turn right\n");
     }
+    /*
     else if (!flag_back_obstacle)
+    {
+        turn_left();
+        bt_send_to_user("turn left\n");
+        turn_left();
+        bt_send_to_user("turn left\n");
+        //go_backward();
+        //bt_send_to_user("go backward\n");
+    }
+*/
+    else
     {
         go_backward();
         bt_send_to_user("go backward\n");
+        //stop();
+        //bt_send_to_user("stop\n");
     }
-    else
-    {
-        stop();
-        bt_send_to_user("stop\n");
-    }
-    delay_us(100000);
+    delay_us(1000000); //1s
     USART_SendData(USART1, user);
     bt_send_to_user((char*)user);
 }
@@ -181,7 +200,7 @@ void go_forward(void)
     GPIO_SetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
     GPIO_ResetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
 
-    delay(motor_delay);
+    delay_us(100000); // 0.1s
     stop();
 }
 
@@ -199,7 +218,7 @@ void go_backward(void)
     GPIO_ResetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
     GPIO_SetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
 
-    delay(motor_delay);
+    delay_us(100000); // 0.1s
     stop();
 }
 
@@ -221,7 +240,7 @@ void turn_left(void)
     GPIO_SetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
     GPIO_ResetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
 
-    delay(motor_delay);
+    delay_us(500000); // 0.5s
     stop();
 }
 
@@ -243,7 +262,7 @@ void turn_right(void)
     GPIO_ResetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
     GPIO_ResetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
 
-    delay(motor_delay);
+    delay_us(500000); // 0.5s
     stop();
 }
 
@@ -253,7 +272,7 @@ void stop(void)
     GPIO_ResetBits(MOTOR_FL2_PORT, MOTOR_FL2_PIN);
 
     GPIO_ResetBits(MOTOR_FR1_PORT, MOTOR_FR1_PIN);
-    GPIO_ResetBits(MOTOR_FR2_PORT, MOTOR_FR2_PIN);
+    GPIO_SetBits(MOTOR_FR2_PORT, MOTOR_FR2_PIN);
 
     GPIO_ResetBits(MOTOR_BL1_PORT, MOTOR_BL1_PIN);
     GPIO_ResetBits(MOTOR_BL2_PORT, MOTOR_BL2_PIN);

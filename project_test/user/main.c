@@ -11,7 +11,7 @@
 #include "infrared.h"
 
 // motor.h
-//extern int motor_mode;
+extern int motor_mode;
 
 // ultra_sonic.h
 extern ultra_sonic us_front;
@@ -29,32 +29,34 @@ extern uint16_t is_connected;
 int main()
 {
     SystemInit();
-    //SysTick_init();
 
     motor_init();
     ultra_sonic_init();
     bt_init();
-    // infrared_init();
+    infrared_init();
     USART_SendData(USART1, 97);
+    printf("init\n");
+    bt_send_to_user("init\n");
     
+    //is_connected = 1;
     while (1)
     {
       // USART_SendData(USART1, 97);
       if (is_connected) {
-          // USART_SendData(USART1, 98);
+          //USART_SendData(USART1, 98);
           // update the obstacle flags
-          // update_obstacle_flags();
-          // printf("us_f: %d | l: %d | r: %d | b: %d\n", us_front.distance, us_left.distance, us_right.distance, us_back.distance);
-          
-
+        if (motor_mode == MOTOR_AUTO) {
+            update_obstacle_flags();
+            printf("us_f: %d | l: %d | r: %d | b: %d\n", us_front.distance, us_left.distance, us_right.distance, us_back.distance);
+        }
           // control the motor based on the mode
           motor_control();
           // printf("main loop\n");
-          // bt_send_to_user("human detected - check the camera\n");
+          //bt_send_to_user("human detected - check the camera\n");
           // check the infrared sensor flag
           if (ir_interrupt_flag)
           {
-              // printf("human detected - check the camera\n");
+              printf("human detected - check the camera\n");
               bt_send_to_user("human detected - check the camera\n");
               reset_ir_flag(); // reset the flag after 200ms
           }

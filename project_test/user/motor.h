@@ -27,20 +27,20 @@
 
 // motor back left | PD8 | PD9
 #define MOTOR_BL1_PORT GPIOD
-#define MOTOR_BL1_PIN GPIO_Pin_8
+#define MOTOR_BL1_PIN GPIO_Pin_9
 #define MOTOR_BL1_RCC RCC_APB2Periph_GPIOD
 
 #define MOTOR_BL2_PORT GPIOD
-#define MOTOR_BL2_PIN GPIO_Pin_9
+#define MOTOR_BL2_PIN GPIO_Pin_8
 #define MOTOR_BL2_RCC RCC_APB2Periph_GPIOD
 
 // motor back right | PD14 | PD15
 #define MOTOR_BR1_PORT GPIOD
-#define MOTOR_BR1_PIN GPIO_Pin_14
+#define MOTOR_BR1_PIN GPIO_Pin_15
 #define MOTOR_BR1_RCC RCC_APB2Periph_GPIOD
 
 #define MOTOR_BR2_PORT GPIOD
-#define MOTOR_BR2_PIN GPIO_Pin_15
+#define MOTOR_BR2_PIN GPIO_Pin_14
 #define MOTOR_BR2_RCC RCC_APB2Periph_GPIOD
 
 // motor mode
