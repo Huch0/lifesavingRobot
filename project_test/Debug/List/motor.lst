@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR ANSI C/C++ Compiler V8.22.1.15669/W32 for ARM       19/Dec/2024  22:31:36
+# IAR ANSI C/C++ Compiler V8.22.1.15669/W32 for ARM       20/Dec/2024  22:50:40
 # Copyright 1999-2018 IAR Systems AB.
 #
 #    Cpu mode     =  thumb
@@ -8,7 +8,7 @@
 #    Source file  =  
 #        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\motor.c
 #    Command line =  
-#        -f C:\Users\pnu2\AppData\Local\Temp\EW872C.tmp
+#        -f C:\Users\pnu2\AppData\Local\Temp\EW5870.tmp
 #        (C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\motor.c
 #        -D USE_STDPERIPH_DRIVER -D STM32F10X_CL -lC
 #        C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\Debug\List
@@ -165,7 +165,7 @@ C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\motor.c
    \   0000006E   0x.... 0x....      BL       GPIO_Init
      46          
      47              GPIO_InitStructure.GPIO_Pin = MOTOR_BL1_PIN;
-   \   00000072   0xF44F 0x7000      MOV      R0,#+512
+   \   00000072   0xF44F 0x7080      MOV      R0,#+256
    \   00000076   0xF8AD 0x0000      STRH     R0,[SP, #+0]
      48              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
    \   0000007A   0x2003             MOVS     R0,#+3
@@ -179,7 +179,7 @@ C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\motor.c
    \   0000008C   0x.... 0x....      BL       GPIO_Init
      51          
      52              GPIO_InitStructure.GPIO_Pin = MOTOR_BL2_PIN;
-   \   00000090   0xF44F 0x7080      MOV      R0,#+256
+   \   00000090   0xF44F 0x7000      MOV      R0,#+512
    \   00000094   0xF8AD 0x0000      STRH     R0,[SP, #+0]
      53              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
    \   00000098   0x2003             MOVS     R0,#+3
@@ -193,7 +193,7 @@ C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\motor.c
    \   000000AA   0x.... 0x....      BL       GPIO_Init
      56          
      57              GPIO_InitStructure.GPIO_Pin = MOTOR_BR1_PIN;
-   \   000000AE   0xF44F 0x4000      MOV      R0,#+32768
+   \   000000AE   0xF44F 0x4080      MOV      R0,#+16384
    \   000000B2   0xF8AD 0x0000      STRH     R0,[SP, #+0]
      58              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
    \   000000B6   0x2003             MOVS     R0,#+3
@@ -207,7 +207,7 @@ C:\Users\pnu2\Documents\GitHub\lifesavingRobot\project_test\user\motor.c
    \   000000C8   0x.... 0x....      BL       GPIO_Init
      61          
      62              GPIO_InitStructure.GPIO_Pin = MOTOR_BR2_PIN;
-   \   000000CC   0xF44F 0x4080      MOV      R0,#+16384
+   \   000000CC   0xF44F 0x4000      MOV      R0,#+32768
    \   000000D0   0xF8AD 0x0000      STRH     R0,[SP, #+0]
      63              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
    \   000000D4   0x2003             MOVS     R0,#+3
@@ -556,25 +556,25 @@ Warning[Pe223]: function "printf" declared implicitly
    \   0000001E   0x.... 0x....      BL       GPIO_ResetBits
     196          
     197              GPIO_SetBits(MOTOR_BL1_PORT, MOTOR_BL1_PIN);
-   \   00000022   0xF44F 0x7100      MOV      R1,#+512
+   \   00000022   0xF44F 0x7180      MOV      R1,#+256
    \   00000026   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000028   0x.... 0x....      BL       GPIO_SetBits
     198              GPIO_ResetBits(MOTOR_BL2_PORT, MOTOR_BL2_PIN);
-   \   0000002C   0xF44F 0x7180      MOV      R1,#+256
+   \   0000002C   0xF44F 0x7100      MOV      R1,#+512
    \   00000030   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000032   0x.... 0x....      BL       GPIO_ResetBits
     199          
     200              GPIO_SetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
-   \   00000036   0xF44F 0x4100      MOV      R1,#+32768
+   \   00000036   0xF44F 0x4180      MOV      R1,#+16384
    \   0000003A   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   0000003C   0x.... 0x....      BL       GPIO_SetBits
     201              GPIO_ResetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
-   \   00000040   0xF44F 0x4180      MOV      R1,#+16384
+   \   00000040   0xF44F 0x4100      MOV      R1,#+32768
    \   00000044   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000046   0x.... 0x....      BL       GPIO_ResetBits
     202          
-    203              delay_us(100000); // 0.1s
-   \   0000004A   0x....             LDR.N    R0,??DataTable10_15  ;; 0x186a0
+    203              delay_us(300000); // 0.3s
+   \   0000004A   0x....             LDR.N    R0,??DataTable10_15  ;; 0x493e0
    \   0000004C   0x.... 0x....      BL       delay_us
     204              stop();
    \   00000050   0x.... 0x....      BL       stop
@@ -606,25 +606,25 @@ Warning[Pe223]: function "printf" declared implicitly
    \   0000001E   0x.... 0x....      BL       GPIO_SetBits
     214          
     215              GPIO_ResetBits(MOTOR_BL1_PORT, MOTOR_BL1_PIN);
-   \   00000022   0xF44F 0x7100      MOV      R1,#+512
+   \   00000022   0xF44F 0x7180      MOV      R1,#+256
    \   00000026   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000028   0x.... 0x....      BL       GPIO_ResetBits
     216              GPIO_SetBits(MOTOR_BL2_PORT, MOTOR_BL2_PIN);
-   \   0000002C   0xF44F 0x7180      MOV      R1,#+256
+   \   0000002C   0xF44F 0x7100      MOV      R1,#+512
    \   00000030   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000032   0x.... 0x....      BL       GPIO_SetBits
     217          
     218              GPIO_ResetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
-   \   00000036   0xF44F 0x4100      MOV      R1,#+32768
+   \   00000036   0xF44F 0x4180      MOV      R1,#+16384
    \   0000003A   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   0000003C   0x.... 0x....      BL       GPIO_ResetBits
     219              GPIO_SetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
-   \   00000040   0xF44F 0x4180      MOV      R1,#+16384
+   \   00000040   0xF44F 0x4100      MOV      R1,#+32768
    \   00000044   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000046   0x.... 0x....      BL       GPIO_SetBits
     220          
-    221              delay_us(100000); // 0.1s
-   \   0000004A   0x....             LDR.N    R0,??DataTable10_15  ;; 0x186a0
+    221              delay_us(300000); // 0.3s
+   \   0000004A   0x....             LDR.N    R0,??DataTable10_15  ;; 0x493e0
    \   0000004C   0x.... 0x....      BL       delay_us
     222              stop();
    \   00000050   0x.... 0x....      BL       stop
@@ -637,7 +637,7 @@ Warning[Pe223]: function "printf" declared implicitly
     226          {
    \                     turn_left: (+1)
    \   00000000   0xB580             PUSH     {R7,LR}
-    227              // Front Left: go backward
+    227              // Fr ont Left: go backward
     228              GPIO_ResetBits(MOTOR_FL1_PORT, MOTOR_FL1_PIN);
    \   00000002   0x2104             MOVS     R1,#+4
    \   00000004   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
@@ -659,21 +659,21 @@ Warning[Pe223]: function "printf" declared implicitly
     234          
     235              // Back Left: Stop
     236              GPIO_ResetBits(MOTOR_BL1_PORT, MOTOR_BL1_PIN);
-   \   00000022   0xF44F 0x7100      MOV      R1,#+512
+   \   00000022   0xF44F 0x7180      MOV      R1,#+256
    \   00000026   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000028   0x.... 0x....      BL       GPIO_ResetBits
     237              GPIO_ResetBits(MOTOR_BL2_PORT, MOTOR_BL2_PIN);
-   \   0000002C   0xF44F 0x7180      MOV      R1,#+256
+   \   0000002C   0xF44F 0x7100      MOV      R1,#+512
    \   00000030   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000032   0x.... 0x....      BL       GPIO_ResetBits
     238          
     239              // Back Right: go forward
     240              GPIO_SetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
-   \   00000036   0xF44F 0x4100      MOV      R1,#+32768
+   \   00000036   0xF44F 0x4180      MOV      R1,#+16384
    \   0000003A   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   0000003C   0x.... 0x....      BL       GPIO_SetBits
     241              GPIO_ResetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
-   \   00000040   0xF44F 0x4180      MOV      R1,#+16384
+   \   00000040   0xF44F 0x4100      MOV      R1,#+32768
    \   00000044   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000046   0x.... 0x....      BL       GPIO_ResetBits
     242          
@@ -713,21 +713,21 @@ Warning[Pe223]: function "printf" declared implicitly
     256          
     257              // Back Left: go forward
     258              GPIO_SetBits(MOTOR_BL1_PORT, MOTOR_BL1_PIN);
-   \   00000022   0xF44F 0x7100      MOV      R1,#+512
+   \   00000022   0xF44F 0x7180      MOV      R1,#+256
    \   00000026   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000028   0x.... 0x....      BL       GPIO_SetBits
     259              GPIO_ResetBits(MOTOR_BL2_PORT, MOTOR_BL2_PIN);
-   \   0000002C   0xF44F 0x7180      MOV      R1,#+256
+   \   0000002C   0xF44F 0x7100      MOV      R1,#+512
    \   00000030   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000032   0x.... 0x....      BL       GPIO_ResetBits
     260          
     261              // Back Right: Stop
     262              GPIO_ResetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
-   \   00000036   0xF44F 0x4100      MOV      R1,#+32768
+   \   00000036   0xF44F 0x4180      MOV      R1,#+16384
    \   0000003A   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   0000003C   0x.... 0x....      BL       GPIO_ResetBits
     263              GPIO_ResetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
-   \   00000040   0xF44F 0x4180      MOV      R1,#+16384
+   \   00000040   0xF44F 0x4100      MOV      R1,#+32768
    \   00000044   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000046   0x.... 0x....      BL       GPIO_ResetBits
     264          
@@ -758,26 +758,26 @@ Warning[Pe223]: function "printf" declared implicitly
    \   00000012   0x2110             MOVS     R1,#+16
    \   00000014   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000016   0x.... 0x....      BL       GPIO_ResetBits
-    275              GPIO_SetBits(MOTOR_FR2_PORT, MOTOR_FR2_PIN);
+    275              GPIO_ResetBits(MOTOR_FR2_PORT, MOTOR_FR2_PIN);
    \   0000001A   0x2180             MOVS     R1,#+128
    \   0000001C   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
-   \   0000001E   0x.... 0x....      BL       GPIO_SetBits
+   \   0000001E   0x.... 0x....      BL       GPIO_ResetBits
     276          
     277              GPIO_ResetBits(MOTOR_BL1_PORT, MOTOR_BL1_PIN);
-   \   00000022   0xF44F 0x7100      MOV      R1,#+512
+   \   00000022   0xF44F 0x7180      MOV      R1,#+256
    \   00000026   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000028   0x.... 0x....      BL       GPIO_ResetBits
     278              GPIO_ResetBits(MOTOR_BL2_PORT, MOTOR_BL2_PIN);
-   \   0000002C   0xF44F 0x7180      MOV      R1,#+256
+   \   0000002C   0xF44F 0x7100      MOV      R1,#+512
    \   00000030   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000032   0x.... 0x....      BL       GPIO_ResetBits
     279          
     280              GPIO_ResetBits(MOTOR_BR1_PORT, MOTOR_BR1_PIN);
-   \   00000036   0xF44F 0x4100      MOV      R1,#+32768
+   \   00000036   0xF44F 0x4180      MOV      R1,#+16384
    \   0000003A   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   0000003C   0x.... 0x....      BL       GPIO_ResetBits
     281              GPIO_ResetBits(MOTOR_BR2_PORT, MOTOR_BR2_PIN);
-   \   00000040   0xF44F 0x4180      MOV      R1,#+16384
+   \   00000040   0xF44F 0x4100      MOV      R1,#+32768
    \   00000044   0x....             LDR.N    R0,??DataTable10  ;; 0x40011400
    \   00000046   0x.... 0x....      BL       GPIO_ResetBits
     282          }
@@ -850,7 +850,7 @@ Warning[Pe223]: function "printf" declared implicitly
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable10_15:
-   \   00000000   0x000186A0         DC32     0x186a0
+   \   00000000   0x000493E0         DC32     0x493e0
 
    \                                 In section .text, align 4, keep-with-next
    \                     ??DataTable10_16:
@@ -985,7 +985,6 @@ Warning[Pe223]: function "printf" declared implicitly
          8   -> RCC_APB2PeriphClockCmd
        8   stop
          8   -> GPIO_ResetBits
-         8   -> GPIO_SetBits
        8   turn_left
          8   -> GPIO_ResetBits
          8   -> GPIO_SetBits
